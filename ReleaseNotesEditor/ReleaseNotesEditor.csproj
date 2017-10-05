@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Commands\OpenWindowCommand.cs" />
     <Compile Include="Commands\ShowSelectBranchesCommand.cs" />
-    <Compile Include="Commands\ShowCommitsCommand.cs" />
     <Compile Include="frmBranchDetail.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -43,6 +43,7 @@ namespace ReleaseNotesEditor
 			this.label3 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.chkOpenPrefilterWindow = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.bsBranchComboBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bsBranchExcluded)).BeginInit();
 			this.groupBox1.SuspendLayout();
@@ -67,13 +68,13 @@ namespace ReleaseNotesEditor
 			this.cmbMainBranch.FormattingEnabled = true;
 			this.cmbMainBranch.Location = new System.Drawing.Point(116, 89);
 			this.cmbMainBranch.Name = "cmbMainBranch";
-			this.cmbMainBranch.Size = new System.Drawing.Size(592, 24);
+			this.cmbMainBranch.Size = new System.Drawing.Size(696, 24);
 			this.cmbMainBranch.TabIndex = 1;
 			this.cmbMainBranch.ValueMember = "ObjectId";
 			// 
 			// bsBranchComboBox
 			// 
-			this.bsBranchComboBox.DataSource = typeof(Branch);
+			this.bsBranchComboBox.DataSource = typeof(CommonDataAndUtilities.GitRestApiDataClasses.Branch);
 			// 
 			// label2
 			// 
@@ -86,7 +87,7 @@ namespace ReleaseNotesEditor
 			// 
 			// bsBranchExcluded
 			// 
-			this.bsBranchExcluded.DataSource = typeof(Branch);
+			this.bsBranchExcluded.DataSource = typeof(CommonDataAndUtilities.GitRestApiDataClasses.Branch);
 			// 
 			// listBox1
 			// 
@@ -100,7 +101,7 @@ namespace ReleaseNotesEditor
 			this.listBox1.Location = new System.Drawing.Point(15, 185);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-			this.listBox1.Size = new System.Drawing.Size(694, 260);
+			this.listBox1.Size = new System.Drawing.Size(798, 276);
 			this.listBox1.TabIndex = 4;
 			this.listBox1.ValueMember = "ObjectId";
 			// 
@@ -113,20 +114,20 @@ namespace ReleaseNotesEditor
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Location = new System.Drawing.Point(15, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(693, 59);
+			this.groupBox1.Size = new System.Drawing.Size(797, 59);
 			this.groupBox1.TabIndex = 5;
 			this.groupBox1.TabStop = false;
 			// 
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(647, 20);
+			this.button1.Location = new System.Drawing.Point(751, 20);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(40, 23);
 			this.button1.TabIndex = 2;
 			this.button1.Text = "Go";
 			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.button1.Click += new System.EventHandler(this.btnApplyBranchNameFilter_Click);
 			// 
 			// textBox1
 			// 
@@ -134,7 +135,7 @@ namespace ReleaseNotesEditor
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(186, 20);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(461, 22);
+			this.textBox1.Size = new System.Drawing.Size(565, 22);
 			this.textBox1.TabIndex = 1;
 			this.textBox1.Text = "f_";
 			// 
@@ -151,19 +152,19 @@ namespace ReleaseNotesEditor
 			// 
 			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(11, 466);
+			this.linkLabel1.Location = new System.Drawing.Point(12, 480);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(187, 16);
 			this.linkLabel1.TabIndex = 6;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "Export source branch commits";
-			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenExportCommitsEditor_LinkClicked);
 			// 
 			// checkBox1
 			// 
 			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(620, 148);
+			this.checkBox1.Location = new System.Drawing.Point(724, 148);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(82, 20);
 			this.checkBox1.TabIndex = 7;
@@ -171,11 +172,25 @@ namespace ReleaseNotesEditor
 			this.checkBox1.UseVisualStyleBackColor = true;
 			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
+			// chkOpenPrefilterWindow
+			// 
+			this.chkOpenPrefilterWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.chkOpenPrefilterWindow.AutoSize = true;
+			this.chkOpenPrefilterWindow.Checked = true;
+			this.chkOpenPrefilterWindow.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkOpenPrefilterWindow.Location = new System.Drawing.Point(218, 480);
+			this.chkOpenPrefilterWindow.Name = "chkOpenPrefilterWindow";
+			this.chkOpenPrefilterWindow.Size = new System.Drawing.Size(154, 20);
+			this.chkOpenPrefilterWindow.TabIndex = 8;
+			this.chkOpenPrefilterWindow.Text = "Open prefilter window";
+			this.chkOpenPrefilterWindow.UseVisualStyleBackColor = true;
+			// 
 			// frmSelectBranches
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(721, 500);
+			this.ClientSize = new System.Drawing.Size(825, 505);
+			this.Controls.Add(this.chkOpenPrefilterWindow);
 			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.groupBox1);
@@ -209,5 +224,6 @@ namespace ReleaseNotesEditor
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.LinkLabel linkLabel1;
 		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox chkOpenPrefilterWindow;
 	}
 }

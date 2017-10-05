@@ -15,58 +15,38 @@ namespace ReleaseNotesEditor
 		private Guid _repositoryId;
 		private string _sourceBranchName;
 		private IEnumerable<string> _excludeBranchesNames;
-		private uint _maxCommits;
 
 		public frmCommitsEditor()
 		{
 			InitializeComponent();
 		}
 
+		/*
 		public frmCommitsEditor(Guid repositoryId, string sourceBranchName, IEnumerable<string> excludeBranchesNames,
 			uint maxCommits = 10000) : this()
 		{
 			SetMembers(repositoryId, sourceBranchName, excludeBranchesNames, maxCommits);
 			LoadCommitsFromGit();
 		}
-
+		*/
 		public frmCommitsEditor(ReleaseCommits dataSource):this()
 		{
 			SetMembers(dataSource.RepositoryId, dataSource.SourceBranch, dataSource.ExcludedBranches);
 			LoadCommitsFromDataset(dataSource);
 		}
 
-		private void SetMembers(Guid repositoryId, string sourceBranchId, IEnumerable<string> excludeBranchesObjectId,
-			uint maxCommits = 1000)
+		private void SetMembers(Guid repositoryId, string sourceBranchId, IEnumerable<string> excludeBranchesObjectId)
 		{
 			_repositoryId = repositoryId;
 			_sourceBranchName = sourceBranchId;
 			_excludeBranchesNames = excludeBranchesObjectId;
-			_maxCommits = maxCommits;
-			UpdateCommitsStats();
-		}
-
-		private void LoadCommitsFromGit()
-		{
-			var excludedCommitIds = new List<string>();
-			foreach (var excludedBranch in _excludeBranchesNames)
-			{
-				excludedCommitIds.AddRange(GitProjectRepository.GetCommits(_repositoryId, _maxCommits, excludedBranch).Value.Select(i => i.CommitId));
-			}
-
-			var sourceBranchCommits =
-				GitProjectRepository.GetCommits(_repositoryId, _maxCommits, _sourceBranchName)
-					.Value.Where(commit => !excludedCommitIds.Contains(commit.CommitId))
-					.Select(commit => new CommitInfo(commit) { RepositoryId = _repositoryId }).ToList();
-
-			ucCommitsContainer1.DataSource = sourceBranchCommits;
-			ucCommitsContainer1.CommitIncludeChanged += UcCommitsContainer1_CommitIncludeChanged;
+		
 			UpdateCommitsStats();
 		}
 
 		private void LoadCommitsFromDataset(ReleaseCommits dataSource)
 		{
 			ucCommitsContainer1.DataSource = dataSource.Commits;
-			lbTotalCommits.Text = dataSource.Commits.Count.ToString();
 			ucCommitsContainer1.CommitIncludeChanged += UcCommitsContainer1_CommitIncludeChanged;
 			UpdateCommitsStats();
 		}
