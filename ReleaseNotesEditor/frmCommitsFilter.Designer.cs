@@ -32,23 +32,25 @@ namespace ReleaseNotesEditor
 		{
 			this.components = new System.ComponentModel.Container();
 			this.dgvCommits = new System.Windows.Forms.DataGridView();
+			this.commitInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.button1 = new System.Windows.Forms.Button();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnReset = new System.Windows.Forms.Button();
+			this.btnFilterApply = new System.Windows.Forms.Button();
+			this.filterAreaPath = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.CommitId = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AuthorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CommiterName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AuthorDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CommiterDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.colPbiTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.WorkItemLink = new System.Windows.Forms.DataGridViewLinkColumn();
-			this.commitInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.button1 = new System.Windows.Forms.Button();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.btnFilterApply = new System.Windows.Forms.Button();
-			this.filterAreaPath = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-			this.btnReset = new System.Windows.Forms.Button();
+			this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCommits)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.commitInfoBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,8 +73,10 @@ namespace ReleaseNotesEditor
             this.CommiterName,
             this.AuthorDate,
             this.CommiterDate,
-            this.dataGridViewCheckBoxColumn1,
-            this.WorkItemLink});
+            this.colPbiTitle,
+            this.WorkItemLink,
+            this.colAreaPath,
+            this.dataGridViewCheckBoxColumn1});
 			this.dgvCommits.DataSource = this.commitInfoBindingSource;
 			this.dgvCommits.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvCommits.GridColor = System.Drawing.SystemColors.Control;
@@ -85,64 +89,6 @@ namespace ReleaseNotesEditor
 			this.dgvCommits.Size = new System.Drawing.Size(1034, 431);
 			this.dgvCommits.TabIndex = 1;
 			this.dgvCommits.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCommits_CellContentClick);
-			// 
-			// CommitId
-			// 
-			this.CommitId.DataPropertyName = "CommitId";
-			this.CommitId.HeaderText = "CommitId";
-			this.CommitId.Name = "CommitId";
-			this.CommitId.ReadOnly = true;
-			// 
-			// dataGridViewTextBoxColumn9
-			// 
-			this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn9.DataPropertyName = "Comment";
-			this.dataGridViewTextBoxColumn9.HeaderText = "Comment";
-			this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-			this.dataGridViewTextBoxColumn9.ReadOnly = true;
-			// 
-			// AuthorName
-			// 
-			this.AuthorName.DataPropertyName = "AuthorName";
-			this.AuthorName.HeaderText = "Author";
-			this.AuthorName.Name = "AuthorName";
-			this.AuthorName.ReadOnly = true;
-			// 
-			// CommiterName
-			// 
-			this.CommiterName.DataPropertyName = "CommiterName";
-			this.CommiterName.HeaderText = "Commiter";
-			this.CommiterName.Name = "CommiterName";
-			this.CommiterName.ReadOnly = true;
-			// 
-			// AuthorDate
-			// 
-			this.AuthorDate.DataPropertyName = "AuthorDate";
-			this.AuthorDate.HeaderText = "Author Date";
-			this.AuthorDate.Name = "AuthorDate";
-			this.AuthorDate.ReadOnly = true;
-			// 
-			// CommiterDate
-			// 
-			this.CommiterDate.DataPropertyName = "CommiterDate";
-			this.CommiterDate.HeaderText = "Commiter Date";
-			this.CommiterDate.Name = "CommiterDate";
-			this.CommiterDate.ReadOnly = true;
-			// 
-			// dataGridViewCheckBoxColumn1
-			// 
-			this.dataGridViewCheckBoxColumn1.DataPropertyName = "IsSelected";
-			this.dataGridViewCheckBoxColumn1.HeaderText = "IsSelected";
-			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-			this.dataGridViewCheckBoxColumn1.ReadOnly = true;
-			// 
-			// WorkItemLink
-			// 
-			this.WorkItemLink.HeaderText = "Work item";
-			this.WorkItemLink.Name = "WorkItemLink";
-			this.WorkItemLink.ReadOnly = true;
-			this.WorkItemLink.Text = "Work item";
-			this.WorkItemLink.UseColumnTextForLinkValue = true;
 			// 
 			// commitInfoBindingSource
 			// 
@@ -195,6 +141,17 @@ namespace ReleaseNotesEditor
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Filter";
 			// 
+			// btnReset
+			// 
+			this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnReset.Location = new System.Drawing.Point(950, 93);
+			this.btnReset.Name = "btnReset";
+			this.btnReset.Size = new System.Drawing.Size(75, 23);
+			this.btnReset.TabIndex = 4;
+			this.btnReset.Text = "Reset";
+			this.btnReset.UseVisualStyleBackColor = true;
+			this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+			// 
 			// btnFilterApply
 			// 
 			this.btnFilterApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -235,16 +192,75 @@ namespace ReleaseNotesEditor
 			this.linkLabel1.Text = "Load associated commits with PBI";
 			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LoadCommitsWithWorkItems_LinkClicked);
 			// 
-			// btnReset
+			// CommitId
 			// 
-			this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnReset.Location = new System.Drawing.Point(950, 93);
-			this.btnReset.Name = "btnReset";
-			this.btnReset.Size = new System.Drawing.Size(75, 23);
-			this.btnReset.TabIndex = 4;
-			this.btnReset.Text = "Reset";
-			this.btnReset.UseVisualStyleBackColor = true;
-			this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+			this.CommitId.DataPropertyName = "CommitId";
+			this.CommitId.HeaderText = "CommitId";
+			this.CommitId.Name = "CommitId";
+			this.CommitId.ReadOnly = true;
+			// 
+			// dataGridViewTextBoxColumn9
+			// 
+			this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn9.DataPropertyName = "Comment";
+			this.dataGridViewTextBoxColumn9.HeaderText = "Comment";
+			this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+			this.dataGridViewTextBoxColumn9.ReadOnly = true;
+			// 
+			// AuthorName
+			// 
+			this.AuthorName.DataPropertyName = "AuthorName";
+			this.AuthorName.HeaderText = "Author";
+			this.AuthorName.Name = "AuthorName";
+			this.AuthorName.ReadOnly = true;
+			// 
+			// CommiterName
+			// 
+			this.CommiterName.DataPropertyName = "CommiterName";
+			this.CommiterName.HeaderText = "Commiter";
+			this.CommiterName.Name = "CommiterName";
+			this.CommiterName.ReadOnly = true;
+			// 
+			// AuthorDate
+			// 
+			this.AuthorDate.DataPropertyName = "AuthorDate";
+			this.AuthorDate.HeaderText = "Author Date";
+			this.AuthorDate.Name = "AuthorDate";
+			this.AuthorDate.ReadOnly = true;
+			// 
+			// CommiterDate
+			// 
+			this.CommiterDate.DataPropertyName = "CommiterDate";
+			this.CommiterDate.HeaderText = "Commiter Date";
+			this.CommiterDate.Name = "CommiterDate";
+			this.CommiterDate.ReadOnly = true;
+			// 
+			// colPbiTitle
+			// 
+			this.colPbiTitle.HeaderText = "Pbi title";
+			this.colPbiTitle.Name = "colPbiTitle";
+			this.colPbiTitle.ReadOnly = true;
+			// 
+			// WorkItemLink
+			// 
+			this.WorkItemLink.HeaderText = "Work item";
+			this.WorkItemLink.Name = "WorkItemLink";
+			this.WorkItemLink.ReadOnly = true;
+			this.WorkItemLink.Text = "Work item";
+			this.WorkItemLink.UseColumnTextForLinkValue = true;
+			// 
+			// colAreaPath
+			// 
+			this.colAreaPath.HeaderText = "Area Path";
+			this.colAreaPath.Name = "colAreaPath";
+			this.colAreaPath.ReadOnly = true;
+			// 
+			// dataGridViewCheckBoxColumn1
+			// 
+			this.dataGridViewCheckBoxColumn1.DataPropertyName = "IsSelected";
+			this.dataGridViewCheckBoxColumn1.HeaderText = "IsSelected";
+			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+			this.dataGridViewCheckBoxColumn1.ReadOnly = true;
 			// 
 			// frmCommitsFilter
 			// 
@@ -274,14 +290,6 @@ namespace ReleaseNotesEditor
 		private System.Windows.Forms.BindingSource commitInfoBindingSource;
 		private System.Windows.Forms.DataGridView dgvCommits;
 		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn CommitId;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-		private System.Windows.Forms.DataGridViewTextBoxColumn AuthorName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn CommiterName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn AuthorDate;
-		private System.Windows.Forms.DataGridViewTextBoxColumn CommiterDate;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
-		private System.Windows.Forms.DataGridViewLinkColumn WorkItemLink;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.LinkLabel linkLabel1;
@@ -289,5 +297,15 @@ namespace ReleaseNotesEditor
 		private System.Windows.Forms.TextBox filterAreaPath;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button btnReset;
+		private System.Windows.Forms.DataGridViewTextBoxColumn CommitId;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+		private System.Windows.Forms.DataGridViewTextBoxColumn AuthorName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn CommiterName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn AuthorDate;
+		private System.Windows.Forms.DataGridViewTextBoxColumn CommiterDate;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colPbiTitle;
+		private System.Windows.Forms.DataGridViewLinkColumn WorkItemLink;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
 	}
 }

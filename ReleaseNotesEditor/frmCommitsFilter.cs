@@ -69,17 +69,32 @@ namespace ReleaseNotesEditor
 			_dataSource = GitProjectRepository.GetWorkItems(_dataSource);
 
 			commitInfoBindingSource.ResetBindings(false);
+
+			foreach (DataGridViewRow row in dgvCommits.Rows)
+			{
+				var commitInfo = row.DataBoundItem as CommitInfo;
+				if (commitInfo.AssociatedWorkItem != null)
+				{
+					dgvCommits[colAreaPath.Name, row.Index].Value = commitInfo.AssociatedWorkItem.AreaPath;
+					dgvCommits[colPbiTitle.Name, row.Index].Value = commitInfo.AssociatedWorkItem.Title;
+				}
+			}
 		}
 
 		private void btnFilterApply_Click(object sender, System.EventArgs e)
 		{
+			CurrencyManager currencyManager1 = (CurrencyManager)BindingContext[dgvCommits.DataSource];
+			currencyManager1.SuspendBinding();
+			
 			foreach (DataGridViewRow row in dgvCommits.Rows)
 			{
 				CommitInfo commitInfo = row.DataBoundItem as CommitInfo;
 
 				row.Visible = commitInfo.AssociatedWorkItem == null ||
-				              commitInfo.AssociatedWorkItem.AreaPath.ToUpperInvariant().StartsWith(filterAreaPath.Text);
+				              commitInfo.AssociatedWorkItem.AreaPath.ToUpperInvariant().StartsWith(filterAreaPath.Text.ToUpperInvariant());
 			}
+
+			currencyManager1.ResumeBinding();
 		}
 
 		private void btnReset_Click(object sender, System.EventArgs e)
