@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using ReleaseNotesEditor.DataClasses;
-using ReleaseNotesEditor.HelperClasses;
+using CommonDataAndUtilities;
+using CommonDataAndUtilities.DataClassAdapters;
+using CommonDataAndUtilities.GitRestApiDataClasses;
+using GitTfsRestServiceProxy;
 
 namespace ReleaseNotesEditor
 {
 	public partial class frmCommitsFilter : Form
 	{
+		private IEnumerable<CommitInfo> _dataSource;
+
 		public IEnumerable<CommitInfo> SelectedCommits
 		{
 			get
@@ -22,7 +26,7 @@ namespace ReleaseNotesEditor
 		{
 			InitializeComponent();
 			button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-			commitInfoBindingSource.DataSource = commits;
+			commitInfoBindingSource.DataSource = _dataSource = commits;
 		}
 
 		private void frmCommitsFilter_Load(object sender, System.EventArgs e)
@@ -48,6 +52,42 @@ namespace ReleaseNotesEditor
 				{
 					new frmWorkItemViewer(workItemId.Value).Show();
 				}
+			}
+		}
+
+		private void LoadCommitsWithWorkItems_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			foreach (var item in _dataSource)
+			{
+				var pbiNumber = PbiNumberParser.TryGetPbiNumberFromComments(item.Comment);
+				if (pbiNumber.HasValue)
+				{
+					item.AssociatedWorkItem = new WorkItem {Id = (int) pbiNumber.Value};
+				}
+			}
+
+			_dataSource = GitProjectRepository.GetWorkItems(_dataSource);
+
+			commitInfoBindingSource.ResetBindings(false);
+		}
+
+		private void btnFilterApply_Click(object sender, System.EventArgs e)
+		{
+			foreach (DataGridViewRow row in dgvCommits.Rows)
+			{
+				CommitInfo commitInfo = row.DataBoundItem as CommitInfo;
+
+				row.Visible = commitInfo.AssociatedWorkItem == null ||
+				              commitInfo.AssociatedWorkItem.AreaPath.ToUpperInvariant().StartsWith(filterAreaPath.Text);
+			}
+		}
+
+		private void btnReset_Click(object sender, System.EventArgs e)
+		{
+			filterAreaPath.Text = string.Empty;
+			foreach (DataGridViewRow row in dgvCommits.Rows)
+			{
+				row.Visible = true;
 			}
 		}
 	}

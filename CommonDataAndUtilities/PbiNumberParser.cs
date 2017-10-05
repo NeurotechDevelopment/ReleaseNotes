@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ReleaseNotesEditor.HelperClasses
+namespace CommonDataAndUtilities
 {
 	public static class PbiNumberParser
 	{

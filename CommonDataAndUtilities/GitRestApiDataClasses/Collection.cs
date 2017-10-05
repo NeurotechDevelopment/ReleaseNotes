@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GitTfsRestServiceProxy.DataClasses
+namespace CommonDataAndUtilities.GitRestApiDataClasses
 {
 	public class Collection<T>
 	{

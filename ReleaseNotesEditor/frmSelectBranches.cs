@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using CommonDataAndUtilities.GitRestApiDataClasses;
 using GitTfsRestServiceProxy;
-using GitTfsRestServiceProxy.DataClasses;
 
 namespace ReleaseNotesEditor
 {

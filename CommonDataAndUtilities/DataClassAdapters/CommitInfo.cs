@@ -1,7 +1,7 @@
 ﻿using System;
-using GitTfsRestServiceProxy.DataClasses;
+using CommonDataAndUtilities.GitRestApiDataClasses;
 
-namespace ReleaseNotesEditor.DataClasses
+namespace CommonDataAndUtilities.DataClassAdapters
 {
 	[Serializable]
 	public class CommitInfo
@@ -25,6 +25,8 @@ namespace ReleaseNotesEditor.DataClasses
 		public string Comment { get; set; }
 
 		public bool IsSelected { get; set; }
+
+		public WorkItem AssociatedWorkItem { get; set; }
 
 		public CommitInfo()
 		{

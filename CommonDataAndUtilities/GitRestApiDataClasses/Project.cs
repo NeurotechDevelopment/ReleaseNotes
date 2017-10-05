@@ -1,6 +1,6 @@
 using System;
 
-namespace GitTfsRestServiceProxy.DataClasses
+namespace CommonDataAndUtilities.GitRestApiDataClasses
 {
 	[Serializable]
 	public class Project

@@ -50,8 +50,6 @@
     <Compile Include="Commands\OpenWindowCommand.cs" />
     <Compile Include="Commands\ShowSelectBranchesCommand.cs" />
     <Compile Include="Commands\ShowCommitsCommand.cs" />
-    <Compile Include="DataClasses\CommitInfo.cs" />
-    <Compile Include="DataClasses\ReleaseCommits.cs" />
     <Compile Include="frmBranchDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,7 +116,6 @@
     <Compile Include="GuiControls\ucRepositoryContainer.Designer.cs">
       <DependentUpon>ucRepositoryContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelperClasses\PbiNumberParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmBranchDetail.resx">
@@ -165,8 +162,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Properties\DataSources\GitTfsRestServiceProxy.Branch.datasource" />
-    <None Include="Properties\DataSources\ReleaseNotesEditor.DataClasses.CommitInfo.datasource" />
+    <None Include="Properties\DataSources\CommonDataAndUtilities.DataClassAdapters.CommitInfo.datasource" />
+    <None Include="Properties\DataSources\CommonDataAndUtilities.GitRestApiDataClasses.Branch.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -181,12 +178,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonDataAndUtilities\CommonDataAndUtilities.csproj">
+      <Project>{E65DDD87-01DB-475C-A7F2-5DAE1BC95F3C}</Project>
+      <Name>CommonDataAndUtilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GitTfsRestServiceProxy\GitTfsRestServiceProxy.csproj">
       <Project>{c2a7bbc9-6bd1-46f4-ad78-3d9364b4cf9f}</Project>
       <Name>GitTfsRestServiceProxy</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataClasses\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

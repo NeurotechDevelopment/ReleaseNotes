@@ -5,8 +5,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
+using CommonDataAndUtilities.DataClassAdapters;
 using GitTfsRestServiceProxy;
-using ReleaseNotesEditor.DataClasses;
 
 namespace ReleaseNotesEditor
 {

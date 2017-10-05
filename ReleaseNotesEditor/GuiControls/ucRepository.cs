@@ -1,6 +1,5 @@
 ﻿using System.Windows.Forms;
-using GitTfsRestServiceProxy;
-using GitTfsRestServiceProxy.DataClasses;
+using CommonDataAndUtilities.GitRestApiDataClasses;
 using ReleaseNotesEditor.Commands;
 
 namespace ReleaseNotesEditor.GuiControls

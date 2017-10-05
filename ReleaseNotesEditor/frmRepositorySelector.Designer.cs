@@ -1,4 +1,4 @@
-﻿using GitTfsRestServiceProxy.DataClasses;
+﻿using CommonDataAndUtilities.GitRestApiDataClasses;
 
 namespace ReleaseNotesEditor
 {

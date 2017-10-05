@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
-using ReleaseNotesEditor.DataClasses;
-using ReleaseNotesEditor.HelperClasses;
+using CommonDataAndUtilities;
+using CommonDataAndUtilities.DataClassAdapters;
 
 namespace ReleaseNotesEditor.GuiControls
 {

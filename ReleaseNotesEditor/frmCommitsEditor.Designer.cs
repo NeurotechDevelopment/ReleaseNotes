@@ -1,4 +1,6 @@
-﻿namespace ReleaseNotesEditor
+﻿using CommonDataAndUtilities.DataClassAdapters;
+
+namespace ReleaseNotesEditor
 {
 	partial class frmCommitsEditor
 	{
@@ -220,7 +222,7 @@
 			// ucCommitsContainer1
 			// 
 			this.ucCommitsContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.ucCommitsContainer1.DataSource = ((System.Collections.Generic.IEnumerable<ReleaseNotesEditor.DataClasses.CommitInfo>)(resources.GetObject("ucCommitsContainer1.DataSource")));
+			this.ucCommitsContainer1.DataSource = ((System.Collections.Generic.IEnumerable<CommitInfo>)(resources.GetObject("ucCommitsContainer1.DataSource")));
 			this.ucCommitsContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ucCommitsContainer1.Location = new System.Drawing.Point(0, 0);
 			this.ucCommitsContainer1.Name = "ucCommitsContainer1";

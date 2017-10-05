@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GitTfsRestServiceProxy.DataClasses
+namespace CommonDataAndUtilities.GitRestApiDataClasses
 {
 	[Serializable]
 	public class WorkItem

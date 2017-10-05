@@ -1,7 +1,9 @@
 ﻿using System;
-using System.IO;
-using GitTfsRestServiceProxy.DataClasses;
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using CommonDataAndUtilities.DataClassAdapters;
+using CommonDataAndUtilities.GitRestApiDataClasses;
+using GitTfsRestServiceProxy.Extensions;
 using RestSharp;
 
 namespace GitTfsRestServiceProxy
@@ -16,7 +18,7 @@ namespace GitTfsRestServiceProxy
 			var request = CreateGetRequest(GitAddressBuilder.RepositoriesResource);
 
 			var response = client.Execute(request);
-			return GetCollection<Repository>(response);
+			return response.ToCollection<Repository>();
 		}
 
 		/// <summary>
@@ -26,17 +28,15 @@ namespace GitTfsRestServiceProxy
 		{
 			// https://fabrikam-fiber-inc.visualstudio.com/DefaultCollection/_apis/git/repositories/278d5cd2-584d-4b63-824a-2ba458937249/commits?api-version=1.0
 			var client = CreateClient();
-			var request = CreateGetRequest(GitAddressBuilder.RepositoriesResource + "/{repositoryId}/commits");
+			var request = CreateGetRequest(GitAddressBuilder.RepositoriesResource + "/{repositoryId}/commits", maxCommites);
 			request.AddUrlSegment("repositoryId", repositoryId.ToString());
-			request.AddQueryParameter("$top", maxCommites.ToString());
 			if (!string.IsNullOrWhiteSpace(branchName))
 			{
 				request.AddQueryParameter("branch", branchName);
 			}
 
 			var response = client.Execute(request);
-			var commits = GetCollection<Commit>(response);
-			return commits;
+			return response.ToCollection<Commit>();
 		}
 
 		public static Commit GetCommit(Guid repositoryId, string commitId)
@@ -63,9 +63,7 @@ namespace GitTfsRestServiceProxy
 			var request = CreateGetRequest(GitAddressBuilder.RepositoriesResource + "/{repositoryId}/refs/heads");
 			request.AddUrlSegment("repositoryId", repositoryId.ToString());
 
-			var response = client.Execute(request);
-			var branches = GetCollection<Branch>(response);
-			return branches;
+			return client.Execute(request).ToCollection<Branch>();
 		}
 
 		public static WorkItem GetWorkItemInfo(uint workItemId)
@@ -79,27 +77,53 @@ namespace GitTfsRestServiceProxy
 			return response.Data;
 		}
 
+		public static Collection<WorkItem> GetWorkItems(IEnumerable<int> workItemIds)
+		{
+			// https://fabrikam-fiber-inc.visualstudio.com/DefaultCollection/_apis/wit/workitems?ids=297,299,300&api-version=1.0
+			var client = CreateClient();
+			var request = CreateGetRequest(GitAddressBuilder.WorkItemsResource);
+			request.AddQueryParameter("ids", string.Join(",", workItemIds));
+
+			var collection = client.Execute(request).ToCollection<WorkItem>();
+			return collection;
+		}
+
+		public static IEnumerable<CommitInfo> GetWorkItems(IEnumerable<CommitInfo> commits)
+		{
+			// https://fabrikam-fiber-inc.visualstudio.com/DefaultCollection/_apis/wit/workitems?ids=297,299,300&api-version=1.0
+			var client = CreateClient();
+			var request = CreateGetRequest(GitAddressBuilder.WorkItemsResource);
+
+			var commitsList = commits.ToList();
+			request.AddQueryParameter("ids", string.Join(",", commitsList.Where(commit => commit.AssociatedWorkItem != null).Select(commit => commit.AssociatedWorkItem.Id)));
+			
+			var collection = client.Execute(request).ToCollection<WorkItem>();
+			foreach (var workItem in collection.Value)
+			{
+				var commit = commitsList.Find(cmt => cmt.AssociatedWorkItem != null && cmt.AssociatedWorkItem.Id == workItem.Id);
+				commit.AssociatedWorkItem = workItem;
+			}
+
+			return commitsList;
+		}
+
 		#endregion
 
 		#region Private methods
-
-		private static Collection<T> GetCollection<T>(IRestResponse response)
-		{
-			JsonSerializer serializer = new JsonSerializer();
-			StringReader stringReader = new StringReader(response.Content);
-			JsonTextReader reader = new JsonTextReader(stringReader);
-			return serializer.Deserialize<Collection<T>>(reader);
-		}
 
 		private static IRestClient CreateClient()
 		{
 			return new RestClient(GitAddressBuilder.BaseAddress);
 		}
 
-		private static IRestRequest CreateGetRequest(string requestUrl)
+		private static IRestRequest CreateGetRequest(string requestUrl, uint maxRecordCount = 0)
 		{
 			var request = new RestRequest(requestUrl, Method.GET);
 			request.AddQueryParameter("api-version", "3.0");
+			if (maxRecordCount > 0)
+			{
+				request.AddQueryParameter("$top", maxRecordCount.ToString());
+			}
 			request.Credentials = GitAddressBuilder.Credential;
 
 			return request;
