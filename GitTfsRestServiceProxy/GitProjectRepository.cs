@@ -100,8 +100,11 @@ namespace GitTfsRestServiceProxy
 			var collection = client.Execute(request).ToCollection<WorkItem>();
 			foreach (var workItem in collection.Value)
 			{
-				var commit = commitsList.Find(cmt => cmt.AssociatedWorkItem != null && cmt.AssociatedWorkItem.Id == workItem.Id);
-				commit.AssociatedWorkItem = workItem;
+				var commitMatched = commitsList.FindAll(cmt => cmt.AssociatedWorkItem != null && cmt.AssociatedWorkItem.Id == workItem.Id);
+				foreach (var commit in commitMatched)
+				{
+					commit.AssociatedWorkItem = workItem;
+				}
 			}
 
 			return commitsList;
