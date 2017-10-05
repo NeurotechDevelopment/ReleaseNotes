@@ -1,4 +1,6 @@
-﻿namespace ReleaseNotesEditor
+﻿using GitTfsRestServiceProxy.DataClasses;
+
+namespace ReleaseNotesEditor
 {
 	partial class frmRepositorySelector
 	{
@@ -38,7 +40,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ucRepositoryContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ucRepositoryContainer1.DataSource = ((System.Collections.Generic.IEnumerable<GitTfsRestServiceProxy.Repository>)(resources.GetObject("ucRepositoryContainer1.DataSource")));
+			this.ucRepositoryContainer1.DataSource = ((System.Collections.Generic.IEnumerable<Repository>)(resources.GetObject("ucRepositoryContainer1.DataSource")));
 			this.ucRepositoryContainer1.Location = new System.Drawing.Point(24, 12);
 			this.ucRepositoryContainer1.Name = "ucRepositoryContainer1";
 			this.ucRepositoryContainer1.Size = new System.Drawing.Size(672, 522);

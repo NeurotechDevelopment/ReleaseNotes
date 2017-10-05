@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using GitTfsRestServiceProxy.DataClasses;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -62,7 +62,6 @@ namespace GitTfsRestServiceProxy
 			var client = CreateClient();
 			var request = CreateGetRequest(GitAddressBuilder.RepositoriesResource + "/{repositoryId}/refs/heads");
 			request.AddUrlSegment("repositoryId", repositoryId.ToString());
-			// request.AddQueryParameter("includeStatuses", "true");
 
 			var response = client.Execute(request);
 			var branches = GetCollection<Branch>(response);

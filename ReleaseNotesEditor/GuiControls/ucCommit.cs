@@ -2,7 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
-using ReleaseNotesEditor.DataClassExtensions;
+using ReleaseNotesEditor.DataClasses;
+using ReleaseNotesEditor.HelperClasses;
 
 namespace ReleaseNotesEditor.GuiControls
 {
@@ -53,13 +54,7 @@ namespace ReleaseNotesEditor.GuiControls
 			InitializeComponent();
 		}
 
-		private uint? TryGetPbiNumberFromComments()
-		{
-			const string workItemPattern = "((?<=PBI #)[0-9]{5})|((?<=PBI )[0-9]{5})|((?<=Bug )[0-9]{5})|((?<=Bug #)[0-9]{5})|((?<=Product backlog item [#]?)[0-9]{5})";
-			var match = Regex.Match(txtCommitMessage.Text, workItemPattern,
-				RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-			return match.Success ? (uint?)uint.Parse(match.Value) : null;
-		}
+		
 
 		private void checkBox1_CheckedChanged(object sender, EventArgs e)
 		{
@@ -80,7 +75,7 @@ namespace ReleaseNotesEditor.GuiControls
 
 		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			uint? workItem = TryGetPbiNumberFromComments();
+			uint? workItem = PbiNumberParser.TryGetPbiNumberFromComments(txtCommitMessage.Text);
 
 			if (workItem.HasValue)
 			{

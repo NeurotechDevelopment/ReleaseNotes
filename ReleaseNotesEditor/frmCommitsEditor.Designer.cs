@@ -28,7 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCommitsEditor));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
 			this.linkLabel3 = new System.Windows.Forms.LinkLabel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -43,7 +45,6 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.ucCommitsContainer1 = new ReleaseNotesEditor.GuiControls.ucCommitsContainer();
-			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -72,6 +73,17 @@
 			this.splitContainer1.Size = new System.Drawing.Size(937, 422);
 			this.splitContainer1.SplitterDistance = 112;
 			this.splitContainer1.TabIndex = 1;
+			// 
+			// linkLabel2
+			// 
+			this.linkLabel2.AutoSize = true;
+			this.linkLabel2.Location = new System.Drawing.Point(320, 9);
+			this.linkLabel2.Name = "linkLabel2";
+			this.linkLabel2.Size = new System.Drawing.Size(147, 16);
+			this.linkLabel2.TabIndex = 10;
+			this.linkLabel2.TabStop = true;
+			this.linkLabel2.Text = "Select commits to show";
+			this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.FilterCommits_LinkClicked);
 			// 
 			// linkLabel3
 			// 
@@ -125,7 +137,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(315, 22);
+			this.label2.Location = new System.Drawing.Point(312, 22);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(216, 16);
 			this.label2.TabIndex = 1;
@@ -208,22 +220,12 @@
 			// ucCommitsContainer1
 			// 
 			this.ucCommitsContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.ucCommitsContainer1.DataSource = ((System.Collections.Generic.IEnumerable<ReleaseNotesEditor.DataClasses.CommitInfo>)(resources.GetObject("ucCommitsContainer1.DataSource")));
 			this.ucCommitsContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ucCommitsContainer1.Location = new System.Drawing.Point(0, 0);
 			this.ucCommitsContainer1.Name = "ucCommitsContainer1";
 			this.ucCommitsContainer1.Size = new System.Drawing.Size(937, 306);
 			this.ucCommitsContainer1.TabIndex = 0;
-			// 
-			// linkLabel2
-			// 
-			this.linkLabel2.AutoSize = true;
-			this.linkLabel2.Location = new System.Drawing.Point(320, 9);
-			this.linkLabel2.Name = "linkLabel2";
-			this.linkLabel2.Size = new System.Drawing.Size(147, 16);
-			this.linkLabel2.TabIndex = 10;
-			this.linkLabel2.TabStop = true;
-			this.linkLabel2.Text = "Select commits to show";
-			this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.FilterCommits_LinkClicked);
 			// 
 			// frmCommitsEditor
 			// 

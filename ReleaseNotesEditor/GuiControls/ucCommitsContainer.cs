@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ReleaseNotesEditor.DataClassExtensions;
+using ReleaseNotesEditor.DataClasses;
 
 namespace ReleaseNotesEditor.GuiControls
 {

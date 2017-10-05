@@ -6,26 +6,26 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
-using ReleaseNotesEditor.DataClassExtensions;
+using ReleaseNotesEditor.DataClasses;
 
 namespace ReleaseNotesEditor
 {
 	public partial class frmCommitsEditor : Form
 	{
-		private Guid repositoryId;
-		private string sourceBranchId;
-		private IEnumerable<string> excludeBranchesObjectId;
-		private uint maxCommits;
+		private Guid _repositoryId;
+		private string _sourceBranchName;
+		private IEnumerable<string> _excludeBranchesNames;
+		private uint _maxCommits;
 
 		public frmCommitsEditor()
 		{
 			InitializeComponent();
 		}
 
-		public frmCommitsEditor(Guid repositoryId, string sourceBranchId, IEnumerable<string> excludeBranchesObjectId,
+		public frmCommitsEditor(Guid repositoryId, string sourceBranchName, IEnumerable<string> excludeBranchesNames,
 			uint maxCommits = 10000) : this()
 		{
-			SetMembers(repositoryId, sourceBranchId, excludeBranchesObjectId, maxCommits);
+			SetMembers(repositoryId, sourceBranchName, excludeBranchesNames, maxCommits);
 			LoadCommitsFromGit();
 		}
 
@@ -38,31 +38,29 @@ namespace ReleaseNotesEditor
 		private void SetMembers(Guid repositoryId, string sourceBranchId, IEnumerable<string> excludeBranchesObjectId,
 			uint maxCommits = 1000)
 		{
-			this.repositoryId = repositoryId;
-			this.sourceBranchId = sourceBranchId;
-			this.excludeBranchesObjectId = excludeBranchesObjectId;
-			this.maxCommits = maxCommits;
-			lbSourceBranch.Text = sourceBranchId.Replace("r_", string.Empty);
-			lbExludedBranches.Text = string.Join(",", excludeBranchesObjectId);
+			_repositoryId = repositoryId;
+			_sourceBranchName = sourceBranchId;
+			_excludeBranchesNames = excludeBranchesObjectId;
+			_maxCommits = maxCommits;
+			UpdateCommitsStats();
 		}
 
 		private void LoadCommitsFromGit()
 		{
 			var excludedCommitIds = new List<string>();
-			foreach (var excludedBranch in excludeBranchesObjectId)
+			foreach (var excludedBranch in _excludeBranchesNames)
 			{
-				excludedCommitIds.AddRange(GitProjectRepository.GetCommits(repositoryId, maxCommits, excludedBranch).Value.Select(i => i.CommitId));
+				excludedCommitIds.AddRange(GitProjectRepository.GetCommits(_repositoryId, _maxCommits, excludedBranch).Value.Select(i => i.CommitId));
 			}
 
 			var sourceBranchCommits =
-				GitProjectRepository.GetCommits(repositoryId, maxCommits, sourceBranchId)
+				GitProjectRepository.GetCommits(_repositoryId, _maxCommits, _sourceBranchName)
 					.Value.Where(commit => !excludedCommitIds.Contains(commit.CommitId))
-					.Select(commit => new CommitInfo(commit) { RepositoryId = repositoryId });
+					.Select(commit => new CommitInfo(commit) { RepositoryId = _repositoryId }).ToList();
 
 			ucCommitsContainer1.DataSource = sourceBranchCommits;
-			lbTotalCommits.Text = sourceBranchCommits.Count().ToString();
 			ucCommitsContainer1.CommitIncludeChanged += UcCommitsContainer1_CommitIncludeChanged;
-			UpdateIncludedCommitsCount();
+			UpdateCommitsStats();
 		}
 
 		private void LoadCommitsFromDataset(ReleaseCommits dataSource)
@@ -70,11 +68,13 @@ namespace ReleaseNotesEditor
 			ucCommitsContainer1.DataSource = dataSource.Commits;
 			lbTotalCommits.Text = dataSource.Commits.Count.ToString();
 			ucCommitsContainer1.CommitIncludeChanged += UcCommitsContainer1_CommitIncludeChanged;
-			UpdateIncludedCommitsCount();
+			UpdateCommitsStats();
 		}
 
-		private void UpdateIncludedCommitsCount()
+		private void UpdateCommitsStats()
 		{
+			lbSourceBranch.Text = _sourceBranchName.Replace("r_", string.Empty);
+			lbExludedBranches.Text = string.Join(",", _excludeBranchesNames.Select(branchName => branchName.Replace("r_", string.Empty)));
 			lbTotalCommits.Text = ucCommitsContainer1.TotalCommits.ToString();
 			lbExcludedCommit.Text = ucCommitsContainer1.ExcludedCommits.ToString();
 			lbIncludedCommits.Text = ucCommitsContainer1.IncludedCommits.ToString();
@@ -82,7 +82,7 @@ namespace ReleaseNotesEditor
 
 		private void UcCommitsContainer1_CommitIncludeChanged(object sender, EventArgs e)
 		{
-			UpdateIncludedCommitsCount();
+			UpdateCommitsStats();
 		}
 
 		private void frmCommitsEditor_Load(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace ReleaseNotesEditor
 		{
 			using (var saveFileDialog = new SaveFileDialog())
 			{
-				var releaseBranch = sourceBranchId.Replace("r_", string.Empty);
+				var releaseBranch = _sourceBranchName.Replace("r_", string.Empty);
 				saveFileDialog.FileName = $"ReleaseNotes_{releaseBranch}.md";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
@@ -117,15 +117,15 @@ namespace ReleaseNotesEditor
 		{
 			var dataSource = new ReleaseCommits
 			{
-				RepositoryId = repositoryId,
-				SourceBranch = sourceBranchId,
-				ExcludedBranches = excludeBranchesObjectId.ToList(),
+				RepositoryId = _repositoryId,
+				SourceBranch = _sourceBranchName,
+				ExcludedBranches = _excludeBranchesNames.ToList(),
 				Commits = ucCommitsContainer1.GetEditedCommits().ToList()
 			};
 
 			using (var saveFileDialog = new SaveFileDialog())
 			{
-				var releaseBranch = sourceBranchId.Replace("r_", string.Empty);
+				var releaseBranch = _sourceBranchName.Replace("r_", string.Empty);
 				saveFileDialog.FileName = $"ReleaseNotes_{releaseBranch}.dat";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
@@ -145,7 +145,7 @@ namespace ReleaseNotesEditor
 				if (dlgFilterCommits.ShowDialog() == DialogResult.OK)
 				{
 					ucCommitsContainer1.SetVisibleCommitControls(dlgFilterCommits.SelectedCommits);
-					UpdateIncludedCommitsCount();
+					UpdateCommitsStats();
 				}
 			}
 		}

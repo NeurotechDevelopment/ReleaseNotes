@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReleaseNotesEditor.DataClassExtensions
+namespace ReleaseNotesEditor.DataClasses
 {
 	[Serializable]
 	public class ReleaseCommits

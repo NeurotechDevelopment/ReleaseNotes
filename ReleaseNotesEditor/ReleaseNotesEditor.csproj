@@ -50,8 +50,8 @@
     <Compile Include="Commands\OpenWindowCommand.cs" />
     <Compile Include="Commands\ShowSelectBranchesCommand.cs" />
     <Compile Include="Commands\ShowCommitsCommand.cs" />
-    <Compile Include="DataClassExtensions\CommitInfo.cs" />
-    <Compile Include="DataClassExtensions\ReleaseCommits.cs" />
+    <Compile Include="DataClasses\CommitInfo.cs" />
+    <Compile Include="DataClasses\ReleaseCommits.cs" />
     <Compile Include="frmBranchDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +118,7 @@
     <Compile Include="GuiControls\ucRepositoryContainer.Designer.cs">
       <DependentUpon>ucRepositoryContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\PbiNumberParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmBranchDetail.resx">
@@ -125,6 +126,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCommitsEditor.resx">
       <DependentUpon>frmCommitsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCommitsFilter.resx">
       <DependentUpon>frmCommitsFilter.cs</DependentUpon>
@@ -164,7 +166,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="Properties\DataSources\GitTfsRestServiceProxy.Branch.datasource" />
-    <None Include="Properties\DataSources\ReleaseNotesEditor.DataClassExtensions.CommitInfo.datasource" />
+    <None Include="Properties\DataSources\ReleaseNotesEditor.DataClasses.CommitInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

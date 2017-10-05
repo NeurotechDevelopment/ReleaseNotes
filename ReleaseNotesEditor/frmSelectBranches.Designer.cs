@@ -1,4 +1,6 @@
-﻿namespace ReleaseNotesEditor
+﻿using GitTfsRestServiceProxy.DataClasses;
+
+namespace ReleaseNotesEditor
 {
 	partial class frmSelectBranches
 	{
@@ -71,7 +73,7 @@
 			// 
 			// bsBranchComboBox
 			// 
-			this.bsBranchComboBox.DataSource = typeof(GitTfsRestServiceProxy.Branch);
+			this.bsBranchComboBox.DataSource = typeof(Branch);
 			// 
 			// label2
 			// 
@@ -84,7 +86,7 @@
 			// 
 			// bsBranchExcluded
 			// 
-			this.bsBranchExcluded.DataSource = typeof(GitTfsRestServiceProxy.Branch);
+			this.bsBranchExcluded.DataSource = typeof(Branch);
 			// 
 			// listBox1
 			// 
@@ -132,14 +134,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(186, 20);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(464, 22);
+			this.textBox1.Size = new System.Drawing.Size(461, 22);
 			this.textBox1.TabIndex = 1;
 			this.textBox1.Text = "f_";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(12, 21);
+			this.label3.Location = new System.Drawing.Point(5, 22);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(175, 16);
 			this.label3.TabIndex = 0;

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
+using GitTfsRestServiceProxy.DataClasses;
 
 namespace ReleaseNotesEditor
 {

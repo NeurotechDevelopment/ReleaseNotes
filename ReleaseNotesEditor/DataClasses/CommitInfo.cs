@@ -1,7 +1,8 @@
 ﻿using System;
 using GitTfsRestServiceProxy;
+using GitTfsRestServiceProxy.DataClasses;
 
-namespace ReleaseNotesEditor.DataClassExtensions
+namespace ReleaseNotesEditor.DataClasses
 {
 	[Serializable]
 	public class CommitInfo

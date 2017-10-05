@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using ReleaseNotesEditor.DataClassExtensions;
+using ReleaseNotesEditor.DataClasses;
+using ReleaseNotesEditor.HelperClasses;
 
 namespace ReleaseNotesEditor
 {
@@ -29,6 +30,24 @@ namespace ReleaseNotesEditor
 			foreach (DataGridViewRow selectedRow in dgvCommits.Rows)
 			{
 				selectedRow.Selected = ((CommitInfo) selectedRow.DataBoundItem).IsSelected;
+			}
+		}
+
+		private void dgvCommits_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex == -1 || e.ColumnIndex == -1)
+			{
+				return;
+			}
+
+			if (dgvCommits.Columns[e.ColumnIndex].Name == WorkItemLink.Name)
+			{
+				var commitInfo = dgvCommits.Rows[e.RowIndex].DataBoundItem as CommitInfo;
+				var workItemId = PbiNumberParser.TryGetPbiNumberFromComments(commitInfo.Comment);
+				if (workItemId.HasValue)
+				{
+					new frmWorkItemViewer(workItemId.Value).Show();
+				}
 			}
 		}
 	}

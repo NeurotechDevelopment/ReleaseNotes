@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
+using GitTfsRestServiceProxy.DataClasses;
 using ReleaseNotesEditor.Commands;
 
 namespace ReleaseNotesEditor.GuiControls
