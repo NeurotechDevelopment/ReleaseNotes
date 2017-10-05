@@ -14,7 +14,17 @@ namespace GitTfsRestServiceProxy.DataClasses
 		"System.Title": "K-Kode Update scripts needs to be fixed. Also add fix to 6.4.0 version scripts",
 		*/
 		public int Id { get; set; }
-
+		
 		public Dictionary<string, string> Fields { get; set; }
+
+		#region Calculated properties
+
+		public string AreaPath => Fields["System.AreaPath"];
+
+		public string Title => Fields["System.Title"];
+
+		public string WorkItemType => Fields["System.WorkItemType"];
+
+		#endregion
 	}
 }

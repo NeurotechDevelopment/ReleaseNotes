@@ -1,5 +1,4 @@
 ﻿using System;
-using GitTfsRestServiceProxy;
 using GitTfsRestServiceProxy.DataClasses;
 
 namespace ReleaseNotesEditor.DataClasses

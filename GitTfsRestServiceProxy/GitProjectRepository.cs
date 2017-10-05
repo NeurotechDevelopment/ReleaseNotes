@@ -68,6 +68,17 @@ namespace GitTfsRestServiceProxy
 			return branches;
 		}
 
+		public static WorkItem GetWorkItemInfo(uint workItemId)
+		{
+			// https://tfs.gecko.no:8088/tfs/DefaultCollection/_apis/wit/workitems/73207
+			var client = CreateClient();
+			var request = CreateGetRequest(GitAddressBuilder.WorkItemsResource + "/{workItemId}");
+			request.AddUrlSegment("workItemId", workItemId.ToString());
+
+			var response = client.Execute<WorkItem>(request);
+			return response.Data;
+		}
+
 		#endregion
 
 		#region Private methods
