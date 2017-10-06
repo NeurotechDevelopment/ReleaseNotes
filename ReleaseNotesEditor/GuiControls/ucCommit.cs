@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
 using CommonDataAndUtilities;
@@ -35,7 +34,6 @@ namespace ReleaseNotesEditor.GuiControls
 				dataSource = value;
 				if (dataSource != null)
 				{
-					txtCommitId.Text = dataSource.CommitId;
 					txtCommitMessage.Text = dataSource.Comment;
 					txtAuthorDate.Text = $"{dataSource.AuthorName} at {dataSource.AuthorDate}";
 					txtCommited.Text = $"{dataSource.CommiterName} at {dataSource.CommiterDate}";
@@ -43,6 +41,7 @@ namespace ReleaseNotesEditor.GuiControls
 					if (dataSource.AssociatedWorkItem != null)
 					{
 						txtWorkItemTitle.Text = dataSource.AssociatedWorkItem.Title;
+						txtAcceptanceCriteria.Text = dataSource.AssociatedWorkItem.AcceptanceCriteria;
 					}
 
 					if (dataSource.IsSelected)
@@ -60,9 +59,32 @@ namespace ReleaseNotesEditor.GuiControls
 			InitializeComponent();
 		}
 
+		#region Helper methods
+
+		private void SetCommitMessagePreservingPbi(string commitComment)
+		{
+			txtCommitMessage.Text = PbiTokenParser.TryTrimStartAndInsertSharp(commitComment);
+		}
+
+		private string GetWorkTitleWithPbi(string text)
+		{
+			string pbiToken = PbiTokenParser.TryGetPbiToken(txtCommitMessage.Text);
+			if (!string.IsNullOrWhiteSpace(pbiToken))
+			{
+				text = $"{pbiToken} {txtWorkItemTitle.Text}";
+			}
+
+			return text;
+		}
+
+		#endregion
+
+		#region Event handlers
+
 		private void LoadFullCommitInfo_CheckedChanged(object sender, EventArgs e)
 		{
 			BackColor = checkBox1.Checked ? Color.Goldenrod : DefaultBackColor;
+
 			if (disableCheckChangedEvent)
 			{
 				return;
@@ -73,20 +95,8 @@ namespace ReleaseNotesEditor.GuiControls
 			if (checkBox1.Checked && !isLoaded)
 			{
 				// Remove all garbage text preceding PBI word
-				var formattedComment = GitProjectRepository.GetCommit(dataSource.RepositoryId, dataSource.CommitId).Comment;
-				var match = Regex.Match(formattedComment, "PBI|Bug", RegexOptions.IgnoreCase);
-				if (match.Success)
-				{
-					formattedComment = formattedComment.Substring(match.Index);
-				}
-
-				var unsharpedPbi = Regex.Match(formattedComment, "(?<=PBI[' ']*)[0-9]{3,5}|(?<=Bug[' ']*)[0-9]{3,5}", RegexOptions.IgnoreCase);
-				if (unsharpedPbi.Success)
-				{
-					formattedComment = formattedComment.Replace(unsharpedPbi.Value, "#" + unsharpedPbi.Value);
-				}
-
-				txtCommitMessage.Text = formattedComment;
+				var comment = GitProjectRepository.GetCommit(dataSource.RepositoryId, dataSource.CommitId).Comment;
+				SetCommitMessagePreservingPbi(comment);
 			}
 			dataSource.IsSelected = checkBox1.Checked;
 			CommitCheckedChanged?.Invoke(this, e);
@@ -94,7 +104,7 @@ namespace ReleaseNotesEditor.GuiControls
 
 		private void ViewWorkItem_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			uint? workItem = PbiNumberParser.TryGetPbiNumber(txtCommitMessage.Text);
+			uint? workItem = PbiTokenParser.TryGetPbiNumber(txtCommitMessage.Text);
 
 			if (workItem.HasValue)
 			{
@@ -106,16 +116,36 @@ namespace ReleaseNotesEditor.GuiControls
 			}
 		}
 
-		private void btnReplaceCommitMessageWithWotkItemTitle_Click(object sender, EventArgs e)
+		private void ReplaceCommitMessageWithWorkItemTitle_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			if (!string.IsNullOrWhiteSpace(txtWorkItemTitle.Text))
 			{
-				string pbiToken = PbiNumberParser.TryGetPbiToken(txtCommitMessage.Text);
-				if (!string.IsNullOrWhiteSpace(pbiToken))
-				{
-					txtCommitMessage.Text = $"{pbiToken} {txtWorkItemTitle.Text}";
-				}
+				txtCommitMessage.Text = GetWorkTitleWithPbi(txtWorkItemTitle.Text);
 			}
 		}
+
+		private void AppendAcceptanceCriteria_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(txtAcceptanceCriteria.Text))
+			{
+				string commitText = txtCommitMessage.Text;
+				if (!commitText.EndsWith("."))
+				{
+					commitText += ".";
+				}
+
+				commitText += " ";
+				commitText += txtAcceptanceCriteria.Text;
+				txtCommitMessage.Text = commitText;
+			}
+		}
+
+		private void ReplaceAndAppend_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			ReplaceCommitMessageWithWorkItemTitle_LinkClicked(sender, e);
+			AppendAcceptanceCriteria_LinkClicked(sender, e);
+		}
+
+		#endregion
 	}
 }

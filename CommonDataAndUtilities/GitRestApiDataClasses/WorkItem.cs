@@ -25,6 +25,8 @@ namespace CommonDataAndUtilities.GitRestApiDataClasses
 
 		public string WorkItemType => Fields["System.WorkItemType"];
 
+		public string AcceptanceCriteria => Fields.ContainsKey("Microsoft.VSTS.Common.AcceptanceCriteria") ? Fields["Microsoft.VSTS.Common.AcceptanceCriteria"] : string.Empty;
+
 		#endregion
 	}
 }

@@ -10,7 +10,7 @@ namespace ReleaseNotesEditor.FilterHandling
 
 		public override bool IsVisible(CommitInfo commitInfo)
 		{
-			uint? workItemId = PbiNumberParser.TryGetPbiNumber(commitInfo.Comment);
+			uint? workItemId = PbiTokenParser.TryGetPbiNumber(commitInfo.Comment);
 			if (!workItemId.HasValue)
 			{
 				return true;

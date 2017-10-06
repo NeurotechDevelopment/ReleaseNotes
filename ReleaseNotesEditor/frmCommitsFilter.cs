@@ -14,22 +14,24 @@ namespace ReleaseNotesEditor
 	{
 		private IEnumerable<CommitInfo> _dataSource;
 
-		public IEnumerable<CommitInfo> SelectedCommits
-		{
-			get
-			{
-				foreach (DataGridViewRow selectedRow in dgvCommits.SelectedRows)
-				{
-					yield return selectedRow.DataBoundItem as CommitInfo;
-				}
-			}
-		}
+		private List<CommitInfo> _selectedCommits = new List<CommitInfo>();
+
+		public IEnumerable<CommitInfo> SelectedCommits => _selectedCommits;
 
 		public frmCommitsFilter(IEnumerable<CommitInfo> commits)
 		{
 			InitializeComponent();
 			button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 			commitInfoBindingSource.DataSource = _dataSource = commits;
+		}
+
+		#region Event handlers
+
+		private void btnOk_Click(object sender, EventArgs e)
+		{
+			_selectedCommits = (from DataGridViewRow selectedRow in dgvCommits.SelectedRows
+								where selectedRow.Visible
+								select selectedRow.DataBoundItem as CommitInfo).ToList();
 		}
 
 		private void frmCommitsFilter_Load(object sender, System.EventArgs e)
@@ -52,7 +54,7 @@ namespace ReleaseNotesEditor
 			if (dgvCommits.Columns[e.ColumnIndex].Name == WorkItemLink.Name)
 			{
 				var commitInfo = dgvCommits.Rows[e.RowIndex].DataBoundItem as CommitInfo;
-				var workItemId = PbiNumberParser.TryGetPbiNumber(commitInfo.Comment);
+				var workItemId = PbiTokenParser.TryGetPbiNumber(commitInfo.Comment);
 				if (workItemId.HasValue)
 				{
 					new frmWorkItemViewer(workItemId.Value).Show();
@@ -60,31 +62,12 @@ namespace ReleaseNotesEditor
 			}
 		}
 
-		private void LoadAssoicatedWorkItems()
+		private void LoadWorkItems_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			foreach (var item in _dataSource)
-			{
-				var pbiNumber = PbiNumberParser.TryGetPbiNumber(item.Comment);
-				if (pbiNumber.HasValue)
-				{
-					item.AssociatedWorkItem = new WorkItem { Id = (int)pbiNumber.Value };
-				}
-			}
-
-			_dataSource = GitProjectRepository.GetWorkItems(_dataSource);
-
-			commitInfoBindingSource.ResetBindings(false);
-
-			foreach (DataGridViewRow row in dgvCommits.Rows)
-			{
-				var commitInfo = row.DataBoundItem as CommitInfo;
-				if (commitInfo.AssociatedWorkItem != null)
-				{
-					dgvCommits[colAreaPath.Name, row.Index].Value = commitInfo.AssociatedWorkItem.AreaPath;
-					dgvCommits[colPbiTitle.Name, row.Index].Value = commitInfo.AssociatedWorkItem.Title;
-				}
-			}
+			LoadAssoicatedWorkItems();
 		}
+
+		#endregion
 
 		#region Grid row visibility/filtering
 
@@ -139,12 +122,36 @@ namespace ReleaseNotesEditor
 			SetVisibleRows(filtersList);
 		}
 
-
 		#endregion
 
-		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		#region Helper methods
+
+		private void LoadAssoicatedWorkItems()
 		{
-			LoadAssoicatedWorkItems();
+			foreach (var item in _dataSource)
+			{
+				var pbiNumber = PbiTokenParser.TryGetPbiNumber(item.Comment);
+				if (pbiNumber.HasValue)
+				{
+					item.AssociatedWorkItem = new WorkItem { Id = (int)pbiNumber.Value };
+				}
+			}
+
+			_dataSource = GitProjectRepository.GetWorkItems(_dataSource);
+
+			commitInfoBindingSource.ResetBindings(false);
+
+			foreach (DataGridViewRow row in dgvCommits.Rows)
+			{
+				var commitInfo = row.DataBoundItem as CommitInfo;
+				if (commitInfo.AssociatedWorkItem != null)
+				{
+					dgvCommits[colAreaPath.Name, row.Index].Value = commitInfo.AssociatedWorkItem.AreaPath;
+					dgvCommits[colPbiTitle.Name, row.Index].Value = commitInfo.AssociatedWorkItem.Title;
+				}
+			}
 		}
+
+		#endregion
 	}
 }
