@@ -66,6 +66,12 @@
     <Compile Include="FilterHandling\ucProjectAreaPathTextBoxFilter.Designer.cs">
       <DependentUpon>ucProjectAreaPathTextBoxFilter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FilterHandling\ucSkipMissingWorkItemAssociationFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterHandling\ucSkipMissingWorkItemAssociationFilter.Designer.cs">
+      <DependentUpon>ucSkipMissingWorkItemAssociationFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBranchDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FilterHandling\ucProjectAreaPathTextBoxFilter.resx">
       <DependentUpon>ucProjectAreaPathTextBoxFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterHandling\ucSkipMissingWorkItemAssociationFilter.resx">
+      <DependentUpon>ucSkipMissingWorkItemAssociationFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBranchDetail.resx">
       <DependentUpon>frmBranchDetail.cs</DependentUpon>

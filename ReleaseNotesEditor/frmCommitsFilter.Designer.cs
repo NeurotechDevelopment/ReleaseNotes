@@ -41,6 +41,10 @@ namespace ReleaseNotesEditor
 			this.btnReset = new System.Windows.Forms.Button();
 			this.btnFilterApply = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.label2 = new System.Windows.Forms.Label();
+			this.lbShownCommits = new System.Windows.Forms.Label();
 			this.CommitId = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AuthorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,12 +53,9 @@ namespace ReleaseNotesEditor
 			this.CommiterDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.commitInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.ucSkipMissingWorkItemAssociationFilter1 = new ReleaseNotesEditor.FilterHandling.ucSkipMissingWorkItemAssociationFilter();
 			this.ucDuplicatePbiCheckBoxFilter1 = new ReleaseNotesEditor.FilterHandling.ucDuplicatePbiCheckBoxFilter();
 			this.ucProjectAreaPathTextBoxFilter1 = new ReleaseNotesEditor.FilterHandling.ucProjectAreaPathTextBoxFilter();
-			this.label2 = new System.Windows.Forms.Label();
-			this.lbShownCommits = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCommits)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -90,7 +91,7 @@ namespace ReleaseNotesEditor
 			this.dgvCommits.RowHeadersVisible = false;
 			this.dgvCommits.RowTemplate.Height = 24;
 			this.dgvCommits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvCommits.Size = new System.Drawing.Size(1166, 338);
+			this.dgvCommits.Size = new System.Drawing.Size(1154, 337);
 			this.dgvCommits.TabIndex = 1;
 			this.dgvCommits.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenWorkItem_CellContentClick);
 			// 
@@ -118,7 +119,7 @@ namespace ReleaseNotesEditor
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(11, 624);
+			this.button1.Location = new System.Drawing.Point(11, 623);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 2;
@@ -142,12 +143,13 @@ namespace ReleaseNotesEditor
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.dgvCommits);
-			this.splitContainer1.Size = new System.Drawing.Size(1166, 502);
+			this.splitContainer1.Size = new System.Drawing.Size(1154, 501);
 			this.splitContainer1.SplitterDistance = 160;
 			this.splitContainer1.TabIndex = 3;
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.ucSkipMissingWorkItemAssociationFilter1);
 			this.groupBox1.Controls.Add(this.ucDuplicatePbiCheckBoxFilter1);
 			this.groupBox1.Controls.Add(this.ucProjectAreaPathTextBoxFilter1);
 			this.groupBox1.Controls.Add(this.btnReset);
@@ -156,7 +158,7 @@ namespace ReleaseNotesEditor
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1166, 160);
+			this.groupBox1.Size = new System.Drawing.Size(1154, 160);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Filter";
@@ -164,7 +166,7 @@ namespace ReleaseNotesEditor
 			// btnReset
 			// 
 			this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnReset.Location = new System.Drawing.Point(1088, 125);
+			this.btnReset.Location = new System.Drawing.Point(1076, 125);
 			this.btnReset.Name = "btnReset";
 			this.btnReset.Size = new System.Drawing.Size(75, 23);
 			this.btnReset.TabIndex = 4;
@@ -175,7 +177,7 @@ namespace ReleaseNotesEditor
 			// btnFilterApply
 			// 
 			this.btnFilterApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFilterApply.Location = new System.Drawing.Point(1007, 125);
+			this.btnFilterApply.Location = new System.Drawing.Point(995, 125);
 			this.btnFilterApply.Name = "btnFilterApply";
 			this.btnFilterApply.Size = new System.Drawing.Size(75, 23);
 			this.btnFilterApply.TabIndex = 3;
@@ -186,11 +188,47 @@ namespace ReleaseNotesEditor
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(19, 56);
+			this.label1.Location = new System.Drawing.Point(8, 32);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(113, 16);
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Project area path:";
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+			// 
+			// linkLabel1
+			// 
+			this.linkLabel1.AutoSize = true;
+			this.linkLabel1.Location = new System.Drawing.Point(12, 9);
+			this.linkLabel1.Name = "linkLabel1";
+			this.linkLabel1.Size = new System.Drawing.Size(105, 16);
+			this.linkLabel1.TabIndex = 6;
+			this.linkLabel1.TabStop = true;
+			this.linkLabel1.Text = "Load work items";
+			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+			// 
+			// label2
+			// 
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(8, 561);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(98, 16);
+			this.label2.TabIndex = 7;
+			this.label2.Text = "Commits count:";
+			// 
+			// lbShownCommits
+			// 
+			this.lbShownCommits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lbShownCommits.AutoSize = true;
+			this.lbShownCommits.Location = new System.Drawing.Point(111, 561);
+			this.lbShownCommits.Name = "lbShownCommits";
+			this.lbShownCommits.Size = new System.Drawing.Size(15, 16);
+			this.lbShownCommits.TabIndex = 8;
+			this.lbShownCommits.Text = "0";
 			// 
 			// CommitId
 			// 
@@ -246,25 +284,16 @@ namespace ReleaseNotesEditor
 			// 
 			this.commitInfoBindingSource.DataSource = typeof(CommonDataAndUtilities.DataClassAdapters.CommitInfo);
 			// 
-			// contextMenuStrip1
+			// ucSkipMissingWorkItemAssociationFilter1
 			// 
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-			// 
-			// linkLabel1
-			// 
-			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(12, 9);
-			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(105, 16);
-			this.linkLabel1.TabIndex = 6;
-			this.linkLabel1.TabStop = true;
-			this.linkLabel1.Text = "Load work items";
-			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+			this.ucSkipMissingWorkItemAssociationFilter1.Location = new System.Drawing.Point(263, 67);
+			this.ucSkipMissingWorkItemAssociationFilter1.Name = "ucSkipMissingWorkItemAssociationFilter1";
+			this.ucSkipMissingWorkItemAssociationFilter1.Size = new System.Drawing.Size(234, 19);
+			this.ucSkipMissingWorkItemAssociationFilter1.TabIndex = 6;
 			// 
 			// ucDuplicatePbiCheckBoxFilter1
 			// 
-			this.ucDuplicatePbiCheckBoxFilter1.Location = new System.Drawing.Point(22, 91);
+			this.ucDuplicatePbiCheckBoxFilter1.Location = new System.Drawing.Point(11, 67);
 			this.ucDuplicatePbiCheckBoxFilter1.Name = "ucDuplicatePbiCheckBoxFilter1";
 			this.ucDuplicatePbiCheckBoxFilter1.Size = new System.Drawing.Size(185, 21);
 			this.ucDuplicatePbiCheckBoxFilter1.TabIndex = 5;
@@ -273,37 +302,17 @@ namespace ReleaseNotesEditor
 			// 
 			this.ucProjectAreaPathTextBoxFilter1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ucProjectAreaPathTextBoxFilter1.Location = new System.Drawing.Point(138, 52);
+			this.ucProjectAreaPathTextBoxFilter1.Location = new System.Drawing.Point(127, 28);
 			this.ucProjectAreaPathTextBoxFilter1.Name = "ucProjectAreaPathTextBoxFilter1";
-			this.ucProjectAreaPathTextBoxFilter1.Size = new System.Drawing.Size(1025, 24);
+			this.ucProjectAreaPathTextBoxFilter1.Size = new System.Drawing.Size(1013, 24);
 			this.ucProjectAreaPathTextBoxFilter1.TabIndex = 5;
-			// 
-			// label2
-			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(8, 562);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(98, 16);
-			this.label2.TabIndex = 7;
-			this.label2.Text = "Commits count:";
-			// 
-			// lbShownCommits
-			// 
-			this.lbShownCommits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.lbShownCommits.AutoSize = true;
-			this.lbShownCommits.Location = new System.Drawing.Point(111, 562);
-			this.lbShownCommits.Name = "lbShownCommits";
-			this.lbShownCommits.Size = new System.Drawing.Size(15, 16);
-			this.lbShownCommits.TabIndex = 8;
-			this.lbShownCommits.Text = "0";
 			// 
 			// frmCommitsFilter
 			// 
 			this.AcceptButton = this.button1;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1171, 659);
+			this.ClientSize = new System.Drawing.Size(1159, 658);
 			this.Controls.Add(this.lbShownCommits);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.linkLabel1);
@@ -351,5 +360,6 @@ namespace ReleaseNotesEditor
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label lbShownCommits;
+		private FilterHandling.ucSkipMissingWorkItemAssociationFilter ucSkipMissingWorkItemAssociationFilter1;
 	}
 }
