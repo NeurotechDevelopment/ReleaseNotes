@@ -45,5 +45,17 @@ namespace ReleaseNotesEditor
 				new frmCommitsEditor(dataSource) { MdiParent = this, WindowState = FormWindowState.Maximized }.Show();
 			}
 		}
+
+		private void checkDuplicatePBIsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var dlg = new OpenFileDialog())
+			{
+				dlg.FileName = "*.md";
+				if (dlg.ShowDialog() == DialogResult.OK)
+				{
+					new frmShowDuplicatePbiNumbers(File.ReadAllLines(dlg.FileName)).Show();
+				}
+			}
+		}
 	}
 }

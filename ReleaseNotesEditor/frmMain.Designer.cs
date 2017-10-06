@@ -31,6 +31,7 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.openRepositoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openCommitEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.checkDuplicatePBIsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -38,10 +39,11 @@
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openRepositoryToolStripMenuItem,
-            this.openCommitEditorToolStripMenuItem});
+            this.openCommitEditorToolStripMenuItem,
+            this.checkDuplicatePBIsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(735, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(888, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -59,11 +61,18 @@
 			this.openCommitEditorToolStripMenuItem.Text = "Open commit editor";
 			this.openCommitEditorToolStripMenuItem.Click += new System.EventHandler(this.openCommitEditorToolStripMenuItem_Click);
 			// 
+			// checkDuplicatePBIsToolStripMenuItem
+			// 
+			this.checkDuplicatePBIsToolStripMenuItem.Name = "checkDuplicatePBIsToolStripMenuItem";
+			this.checkDuplicatePBIsToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
+			this.checkDuplicatePBIsToolStripMenuItem.Text = "Check duplicate PBIs";
+			this.checkDuplicatePBIsToolStripMenuItem.Click += new System.EventHandler(this.checkDuplicatePBIsToolStripMenuItem_Click);
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(735, 456);
+			this.ClientSize = new System.Drawing.Size(888, 595);
 			this.Controls.Add(this.menuStrip1);
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.menuStrip1;
@@ -81,5 +90,6 @@
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem openRepositoryToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem openCommitEditorToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem checkDuplicatePBIsToolStripMenuItem;
 	}
 }

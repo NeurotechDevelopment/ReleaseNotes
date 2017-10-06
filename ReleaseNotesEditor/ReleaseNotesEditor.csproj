@@ -96,6 +96,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmShowDuplicatePbiNumbers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmShowDuplicatePbiNumbers.Designer.cs">
+      <DependentUpon>frmShowDuplicatePbiNumbers.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmWorkItemViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmShowDuplicatePbiNumbers.resx">
+      <DependentUpon>frmShowDuplicatePbiNumbers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWorkItemViewer.resx">
       <DependentUpon>frmWorkItemViewer.cs</DependentUpon>
