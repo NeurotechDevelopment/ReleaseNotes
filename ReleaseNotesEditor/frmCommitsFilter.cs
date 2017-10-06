@@ -52,7 +52,7 @@ namespace ReleaseNotesEditor
 			if (dgvCommits.Columns[e.ColumnIndex].Name == WorkItemLink.Name)
 			{
 				var commitInfo = dgvCommits.Rows[e.RowIndex].DataBoundItem as CommitInfo;
-				var workItemId = PbiNumberParser.TryGetPbiNumberFromComments(commitInfo.Comment);
+				var workItemId = PbiNumberParser.TryGetPbiNumber(commitInfo.Comment);
 				if (workItemId.HasValue)
 				{
 					new frmWorkItemViewer(workItemId.Value).Show();
@@ -64,7 +64,7 @@ namespace ReleaseNotesEditor
 		{
 			foreach (var item in _dataSource)
 			{
-				var pbiNumber = PbiNumberParser.TryGetPbiNumberFromComments(item.Comment);
+				var pbiNumber = PbiNumberParser.TryGetPbiNumber(item.Comment);
 				if (pbiNumber.HasValue)
 				{
 					item.AssociatedWorkItem = new WorkItem { Id = (int)pbiNumber.Value };

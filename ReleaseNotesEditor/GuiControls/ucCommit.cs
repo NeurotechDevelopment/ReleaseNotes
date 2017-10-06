@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
 using CommonDataAndUtilities;
@@ -38,6 +39,11 @@ namespace ReleaseNotesEditor.GuiControls
 					txtAuthorDate.Text = $"{dataSource.AuthorName} at {dataSource.AuthorDate}";
 					txtCommited.Text = $"{dataSource.CommiterName} at {dataSource.CommiterDate}";
 
+					if (dataSource.AssociatedWorkItem != null)
+					{
+						txtWorkItemTitle.Text = dataSource.AssociatedWorkItem.Title;
+					}
+
 					if (dataSource.IsSelected)
 					{
 						disableCheckChangedEvent = true;
@@ -53,9 +59,7 @@ namespace ReleaseNotesEditor.GuiControls
 			InitializeComponent();
 		}
 
-		
-
-		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		private void LoadFullCommitInfo_CheckedChanged(object sender, EventArgs e)
 		{
 			if (disableCheckChangedEvent)
 			{
@@ -68,26 +72,27 @@ namespace ReleaseNotesEditor.GuiControls
 			{
 				// Remove all garbage text preceding PBI word
 				var formattedComment = GitProjectRepository.GetCommit(dataSource.RepositoryId, dataSource.CommitId).Comment;
-				var match = System.Text.RegularExpressions.Regex.Match(formattedComment, "PBI|Bug", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+				var match = Regex.Match(formattedComment, "PBI|Bug", RegexOptions.IgnoreCase);
 				if (match.Success)
 				{
 					formattedComment = formattedComment.Substring(match.Index);
 				}
 
-				var unsharpedPbi = System.Text.RegularExpressions.Regex.Match(formattedComment, "(?<=PBI[' ']*)[0-9]{3,5}|(?<=Bug[' ']*)[0-9]{3,5}", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+				var unsharpedPbi = Regex.Match(formattedComment, "(?<=PBI[' ']*)[0-9]{3,5}|(?<=Bug[' ']*)[0-9]{3,5}", RegexOptions.IgnoreCase);
 				if (unsharpedPbi.Success)
 				{
 					formattedComment = formattedComment.Replace(unsharpedPbi.Value, "#" + unsharpedPbi.Value);
 				}
+
 				txtCommitMessage.Text = formattedComment;
 			}
 			dataSource.IsSelected = checkBox1.Checked;
 			CommitCheckedChanged?.Invoke(this, e);
 		}
 
-		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void ViewWorkItem_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			uint? workItem = PbiNumberParser.TryGetPbiNumberFromComments(txtCommitMessage.Text);
+			uint? workItem = PbiNumberParser.TryGetPbiNumber(txtCommitMessage.Text);
 
 			if (workItem.HasValue)
 			{
@@ -96,6 +101,18 @@ namespace ReleaseNotesEditor.GuiControls
 			else
 			{
 				MessageBox.Show("Couldn't parse workitem.");
+			}
+		}
+
+		private void btnReplaceCommitMessageWithWotkItemTitle_Click(object sender, EventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(txtWorkItemTitle.Text))
+			{
+				string pbiToken = PbiNumberParser.TryGetPbiToken(txtCommitMessage.Text);
+				if (!string.IsNullOrWhiteSpace(pbiToken))
+				{
+					txtCommitMessage.Text = $"{pbiToken} {txtWorkItemTitle.Text}";
+				}
 			}
 		}
 	}
