@@ -66,7 +66,20 @@ namespace ReleaseNotesEditor.GuiControls
 
 			if (checkBox1.Checked && !isLoaded)
 			{
-				txtCommitMessage.Text = GitProjectRepository.GetCommit(dataSource.RepositoryId, dataSource.CommitId).Comment;
+				// Remove all garbage text preceding PBI word
+				var formattedComment = GitProjectRepository.GetCommit(dataSource.RepositoryId, dataSource.CommitId).Comment;
+				var match = System.Text.RegularExpressions.Regex.Match(formattedComment, "PBI|Bug", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+				if (match.Success)
+				{
+					formattedComment = formattedComment.Substring(match.Index);
+				}
+
+				var unsharpedPbi = System.Text.RegularExpressions.Regex.Match(formattedComment, "(?<=PBI[' ']*)[0-9]{3,5}|(?<=Bug[' ']*)[0-9]{3,5}", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+				if (unsharpedPbi.Success)
+				{
+					formattedComment = formattedComment.Replace(unsharpedPbi.Value, "#" + unsharpedPbi.Value);
+				}
+				txtCommitMessage.Text = formattedComment;
 			}
 			dataSource.IsSelected = checkBox1.Checked;
 			CommitCheckedChanged?.Invoke(this, e);

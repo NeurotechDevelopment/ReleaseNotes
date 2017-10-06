@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CommonDataAndUtilities;
 using CommonDataAndUtilities.DataClassAdapters;
 using CommonDataAndUtilities.GitRestApiDataClasses;
 using GitTfsRestServiceProxy;
+using ReleaseNotesEditor.FilterHandling;
 
 namespace ReleaseNotesEditor
 {
@@ -35,9 +38,11 @@ namespace ReleaseNotesEditor
 			{
 				selectedRow.Selected = ((CommitInfo) selectedRow.DataBoundItem).IsSelected;
 			}
+
+			lbShownCommits.Text = _dataSource.Count().ToString();
 		}
 
-		private void dgvCommits_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		private void OpenWorkItem_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			if (e.RowIndex == -1 || e.ColumnIndex == -1)
 			{
@@ -55,14 +60,14 @@ namespace ReleaseNotesEditor
 			}
 		}
 
-		private void LoadCommitsWithWorkItems_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void LoadAssoicatedWorkItems()
 		{
 			foreach (var item in _dataSource)
 			{
 				var pbiNumber = PbiNumberParser.TryGetPbiNumberFromComments(item.Comment);
 				if (pbiNumber.HasValue)
 				{
-					item.AssociatedWorkItem = new WorkItem {Id = (int) pbiNumber.Value};
+					item.AssociatedWorkItem = new WorkItem { Id = (int)pbiNumber.Value };
 				}
 			}
 
@@ -81,29 +86,65 @@ namespace ReleaseNotesEditor
 			}
 		}
 
-		private void btnFilterApply_Click(object sender, System.EventArgs e)
+		#region Grid row visibility/filtering
+
+		private void SetVisibleRows(List<IFilterCommitInfoControl> visibilityStrategies)
 		{
+			int visibleCount = 0;
 			CurrencyManager currencyManager1 = (CurrencyManager)BindingContext[dgvCommits.DataSource];
 			currencyManager1.SuspendBinding();
-			
+
 			foreach (DataGridViewRow row in dgvCommits.Rows)
 			{
-				CommitInfo commitInfo = row.DataBoundItem as CommitInfo;
-
-				row.Visible = commitInfo.AssociatedWorkItem == null ||
-				              commitInfo.AssociatedWorkItem.AreaPath.ToUpperInvariant().StartsWith(filterAreaPath.Text.ToUpperInvariant());
+				row.Visible = visibilityStrategies.All(x => x.IsItemVisible(row.DataBoundItem as CommitInfo));
+				visibleCount += Convert.ToInt32(row.Visible);
 			}
 
 			currencyManager1.ResumeBinding();
+
+			lbShownCommits.Text = visibleCount.ToString();
 		}
 
-		private void btnReset_Click(object sender, System.EventArgs e)
+		private void btnFilterApply_Click(object sender, EventArgs e)
 		{
-			filterAreaPath.Text = string.Empty;
-			foreach (DataGridViewRow row in dgvCommits.Rows)
+			// Get filter controls
+			List<IFilterCommitInfoControl> filtersList = new List<IFilterCommitInfoControl>();
+			foreach (var control in groupBox1.Controls)
 			{
-				row.Visible = true;
+				var filterCommitControl = control as IFilterCommitInfoControl;
+				if (filterCommitControl != null)
+				{
+					filterCommitControl.InitFilter();
+					filtersList.Add(filterCommitControl);
+				}
 			}
+
+			SetVisibleRows(filtersList);
+		}
+
+		private void btnReset_Click(object sender, EventArgs e)
+		{
+			// Get filter controls
+			List<IFilterCommitInfoControl> filtersList = new List<IFilterCommitInfoControl>();
+			foreach (var control in groupBox1.Controls)
+			{
+				var filterCommitControl = control as IFilterCommitInfoControl;
+				if (filterCommitControl != null)
+				{
+					filterCommitControl.ResetFilter();
+					filtersList.Add(filterCommitControl);
+				}
+			}
+
+			SetVisibleRows(filtersList);
+		}
+
+
+		#endregion
+
+		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			LoadAssoicatedWorkItems();
 		}
 	}
 }

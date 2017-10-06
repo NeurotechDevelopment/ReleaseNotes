@@ -49,6 +49,23 @@
   <ItemGroup>
     <Compile Include="Commands\OpenWindowCommand.cs" />
     <Compile Include="Commands\ShowSelectBranchesCommand.cs" />
+    <Compile Include="FilterHandling\AssociatedWorkItemFilterStrategy.cs" />
+    <Compile Include="FilterHandling\DuplicatePbiDetectorStrategy.cs" />
+    <Compile Include="FilterHandling\FilterItemVisibilityStrategyBase.cs" />
+    <Compile Include="FilterHandling\AlwaysVisibleStrategy.cs" />
+    <Compile Include="FilterHandling\IFilterCommitInfoControl.cs" />
+    <Compile Include="FilterHandling\ucDuplicatePbiCheckBoxFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterHandling\ucDuplicatePbiCheckBoxFilter.Designer.cs">
+      <DependentUpon>ucDuplicatePbiCheckBoxFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterHandling\ucProjectAreaPathTextBoxFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilterHandling\ucProjectAreaPathTextBoxFilter.Designer.cs">
+      <DependentUpon>ucProjectAreaPathTextBoxFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBranchDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +134,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FilterHandling\ucDuplicatePbiCheckBoxFilter.resx">
+      <DependentUpon>ucDuplicatePbiCheckBoxFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterHandling\ucProjectAreaPathTextBoxFilter.resx">
+      <DependentUpon>ucProjectAreaPathTextBoxFilter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmBranchDetail.resx">
       <DependentUpon>frmBranchDetail.cs</DependentUpon>
     </EmbeddedResource>
