@@ -27,6 +27,8 @@ namespace CommonDataAndUtilities.GitRestApiDataClasses
 
 		public string AcceptanceCriteria => Fields.ContainsKey("Microsoft.VSTS.Common.AcceptanceCriteria") ? Fields["Microsoft.VSTS.Common.AcceptanceCriteria"] : string.Empty;
 
+		public string Resolution => Fields.ContainsKey("Microsoft.VSTS.Common.Resolution") ? Fields["Microsoft.VSTS.Common.Resolution"] : string.Empty;
+
 		#endregion
 	}
 }

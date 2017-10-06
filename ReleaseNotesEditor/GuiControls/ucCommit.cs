@@ -41,7 +41,7 @@ namespace ReleaseNotesEditor.GuiControls
 					if (dataSource.AssociatedWorkItem != null)
 					{
 						txtWorkItemTitle.Text = dataSource.AssociatedWorkItem.Title;
-						txtAcceptanceCriteria.Text = dataSource.AssociatedWorkItem.AcceptanceCriteria;
+						txtAcceptanceCriteria.Text = dataSource.AssociatedWorkItem.Resolution;
 					}
 
 					if (dataSource.IsSelected)

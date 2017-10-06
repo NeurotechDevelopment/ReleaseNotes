@@ -153,9 +153,9 @@
 			this.label6.AutoSize = true;
 			this.label6.Location = new System.Drawing.Point(6, 65);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(126, 16);
+			this.label6.Size = new System.Drawing.Size(75, 16);
 			this.label6.TabIndex = 11;
-			this.label6.Text = "Acceptance criteria:";
+			this.label6.Text = "Resolution:";
 			// 
 			// txtAcceptanceCriteria
 			// 
@@ -227,10 +227,10 @@
 			this.linkLabel3.AutoSize = true;
 			this.linkLabel3.Location = new System.Drawing.Point(131, 130);
 			this.linkLabel3.Name = "linkLabel3";
-			this.linkLabel3.Size = new System.Drawing.Size(173, 16);
+			this.linkLabel3.Size = new System.Drawing.Size(160, 16);
 			this.linkLabel3.TabIndex = 14;
 			this.linkLabel3.TabStop = true;
-			this.linkLabel3.Text = "Append acceptance criteria";
+			this.linkLabel3.Text = "Append resolution criteria";
 			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AppendAcceptanceCriteria_LinkClicked);
 			// 
 			// linkLabel2
