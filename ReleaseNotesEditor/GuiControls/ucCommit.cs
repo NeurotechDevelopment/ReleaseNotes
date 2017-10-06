@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GitTfsRestServiceProxy;
@@ -61,6 +62,7 @@ namespace ReleaseNotesEditor.GuiControls
 
 		private void LoadFullCommitInfo_CheckedChanged(object sender, EventArgs e)
 		{
+			BackColor = checkBox1.Checked ? Color.Goldenrod : DefaultBackColor;
 			if (disableCheckChangedEvent)
 			{
 				return;
