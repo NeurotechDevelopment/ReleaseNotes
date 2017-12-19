@@ -9,16 +9,16 @@ namespace ReleaseNotesEditor
 {
 	public partial class frmSelectBranches : Form
 	{
-		private Guid? repositoryId;
+		private Repository _repository;
 
-		public frmSelectBranches()
+		private frmSelectBranches()
 		{
 			InitializeComponent();
 		}
 
-		public frmSelectBranches(Guid repositoryId) : this()
+		public frmSelectBranches(Repository repository) : this()
 		{
-			this.repositoryId = repositoryId;
+			_repository = repository;
 		}
 
 		private void frmBranches_Load(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace ReleaseNotesEditor
 		{
 			if (!DesignMode)
 			{
-				var branches = GitProjectRepository.GetBranches(repositoryId.Value).Value;
+				var branches = GitProjectRepository.GetBranches(_repository.Id).Value;
 				bsBranchComboBox.DataSource = branches.Where(br => !br.Name.Contains(textBox1.Text));
 				bsBranchExcluded.DataSource = branches;
 			}
@@ -46,7 +46,7 @@ namespace ReleaseNotesEditor
 			var sourceBranch = (bsBranchComboBox.Current as Branch).Name.Replace("refs/heads/", string.Empty);
 			var excludedBranches = listBox1.SelectedItems.Cast<Branch>().Select(i => i.Name.Replace("refs/heads/", string.Empty)).ToList();
 
-			var commitsDiff = GitProjectRepository.GetCommits(repositoryId.Value, sourceBranch, excludedBranches);
+			var commitsDiff = GitProjectRepository.GetCommits(_repository.Id, sourceBranch, excludedBranches);
 			if (chkOpenPrefilterWindow.Checked)
 			{
 				using (var dlg = new frmCommitsFilter(commitsDiff))
@@ -60,7 +60,8 @@ namespace ReleaseNotesEditor
 
 			new frmCommitsEditor(new ReleaseCommits
 			{
-				RepositoryId = repositoryId.Value,
+				RepositoryId = _repository.Id,
+				RepositoryName = _repository.Name,
 				Commits = commitsDiff.ToList(),
 				ExcludedBranches = excludedBranches,
 				SourceBranch = sourceBranch

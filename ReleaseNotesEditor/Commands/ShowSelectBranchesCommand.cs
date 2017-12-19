@@ -1,19 +1,19 @@
-﻿using System;
+﻿using CommonDataAndUtilities.GitRestApiDataClasses;
 
 namespace ReleaseNotesEditor.Commands
 {
 	public class ShowSelectBranchesCommand : OpenWindowCommand
 	{
-		private readonly Guid repositoryId;
+		private readonly Repository _repository;
 
-		public ShowSelectBranchesCommand(Guid repositoryId)
+		public ShowSelectBranchesCommand(Repository repository)
 		{
-			this.repositoryId = repositoryId;
+			_repository = repository;
 		}
 
 		public override void Execute()
 		{
-			new frmSelectBranches(repositoryId).ShowDialog();
+			new frmSelectBranches(_repository).ShowDialog();
 		}
 	}
 }

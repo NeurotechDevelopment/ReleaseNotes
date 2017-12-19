@@ -4,7 +4,7 @@ using System.Net;
 
 namespace GitTfsRestServiceProxy
 {
-	internal static class GitAddressBuilder
+	public static class GitAddressBuilder
 	{
 		private static string ApiEndpoint => ConfigurationManager.AppSettings["GitApiEndpointAddress"];
 
@@ -18,5 +18,10 @@ namespace GitTfsRestServiceProxy
 			=>
 				new NetworkCredential(ConfigurationManager.AppSettings["GitUsername"],
 					ConfigurationManager.AppSettings["GitPassword"]);
+
+		public static Uri GetWorkItemOnBoardAddress(uint pbiNumber)
+		{
+			return new Uri(BaseAddress, ConfigurationManager.AppSettings["WorkItemOnBoardAddress"].Replace("#pbiNumber", pbiNumber.ToString()));
+		}
 	}
 }

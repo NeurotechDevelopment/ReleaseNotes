@@ -6,6 +6,7 @@ using CommonDataAndUtilities.DataClassAdapters;
 using CommonDataAndUtilities.GitRestApiDataClasses;
 using GitTfsRestServiceProxy.Extensions;
 using RestSharp;
+using RestSharp.Authenticators;
 
 namespace GitTfsRestServiceProxy
 {
@@ -20,6 +21,7 @@ namespace GitTfsRestServiceProxy
 		public static Collection<Repository> GetRepositories()
 		{
 			var client = CreateClient();
+			
 			var request = CreateGetRequest(GitAddressBuilder.RepositoriesResource);
 
 			var response = client.Execute(request);
@@ -143,7 +145,10 @@ namespace GitTfsRestServiceProxy
 
 		private static IRestClient CreateClient()
 		{
-			return new RestClient(GitAddressBuilder.BaseAddress);
+			var restClient = new RestClient(GitAddressBuilder.BaseAddress);
+			var networkCredentials = GitAddressBuilder.Credential;
+			restClient.Authenticator = new HttpBasicAuthenticator(networkCredentials.UserName, networkCredentials.Password);
+			return restClient;
 		}
 
 		private static IRestRequest CreateGetRequest(string requestUrl)
@@ -154,8 +159,8 @@ namespace GitTfsRestServiceProxy
 			{
 				request.AddQueryParameter("$top", MaxRecordCount.ToString());
 			}
-			request.Credentials = GitAddressBuilder.Credential;
-
+			//request.Credentials = GitAddressBuilder.Credential;
+			
 			return request;
 		}
 

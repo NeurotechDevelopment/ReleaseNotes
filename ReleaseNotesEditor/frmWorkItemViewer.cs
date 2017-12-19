@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using GitTfsRestServiceProxy;
 
 namespace ReleaseNotesEditor
 {
@@ -22,7 +16,7 @@ namespace ReleaseNotesEditor
 
 		private void frmInternetExplorer_Load(object sender, EventArgs e)
 		{
-			webBrowser1.Navigate(new Uri($"https://tfs.gecko.no:8088/tfs/DefaultCollection/Projects/_workitems?id={pbiNumber}&_a=edit"));
+			webBrowser1.Navigate(GitAddressBuilder.GetWorkItemOnBoardAddress(pbiNumber));
 		}
 	}
 }

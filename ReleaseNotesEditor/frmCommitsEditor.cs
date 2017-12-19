@@ -6,17 +6,17 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using CommonDataAndUtilities.DataClassAdapters;
-using GitTfsRestServiceProxy;
 
 namespace ReleaseNotesEditor
 {
 	public partial class frmCommitsEditor : Form
 	{
 		private Guid _repositoryId;
+		private string _repositoryName;
 		private string _sourceBranchName;
 		private IEnumerable<string> _excludeBranchesNames;
 
-		public frmCommitsEditor()
+		private frmCommitsEditor()
 		{
 			InitializeComponent();
 		}
@@ -31,13 +31,14 @@ namespace ReleaseNotesEditor
 		*/
 		public frmCommitsEditor(ReleaseCommits dataSource):this()
 		{
-			SetMembers(dataSource.RepositoryId, dataSource.SourceBranch, dataSource.ExcludedBranches);
+			SetMembers(dataSource.RepositoryId, dataSource.RepositoryName, dataSource.SourceBranch, dataSource.ExcludedBranches);
 			LoadCommitsFromDataset(dataSource);
 		}
 
-		private void SetMembers(Guid repositoryId, string sourceBranchId, IEnumerable<string> excludeBranchesObjectId)
+		private void SetMembers(Guid repositoryId, string repositoryName, string sourceBranchId, IEnumerable<string> excludeBranchesObjectId)
 		{
 			_repositoryId = repositoryId;
+			_repositoryName = repositoryName;
 			_sourceBranchName = sourceBranchId;
 			_excludeBranchesNames = excludeBranchesObjectId;
 		
@@ -74,10 +75,10 @@ namespace ReleaseNotesEditor
 			using (var saveFileDialog = new SaveFileDialog())
 			{
 				var releaseBranch = _sourceBranchName.Replace("r_", string.Empty);
-				saveFileDialog.FileName = $"ReleaseNotes_{releaseBranch}.md";
+				saveFileDialog.FileName = $"ReleaseNotes_{_repositoryName}_{releaseBranch}.md";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					var sb = new StringBuilder($"# EphorteWeb `{releaseBranch}` release notes");
+					var sb = new StringBuilder($"# {_repositoryName} `{releaseBranch}` release notes");
 					sb.AppendLine();
 					sb.AppendLine("`TODO: Release date`");
 					sb.AppendLine();
@@ -106,7 +107,7 @@ namespace ReleaseNotesEditor
 			using (var saveFileDialog = new SaveFileDialog())
 			{
 				var releaseBranch = _sourceBranchName.Replace("r_", string.Empty);
-				saveFileDialog.FileName = $"ReleaseNotes_{releaseBranch}.dat";
+				saveFileDialog.FileName = $"ReleaseNotes_{_repositoryName}_{releaseBranch}.dat";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
 					var serializer = new DataContractSerializer(typeof(ReleaseCommits));

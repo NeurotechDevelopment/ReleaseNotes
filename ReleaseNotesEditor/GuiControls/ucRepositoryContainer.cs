@@ -26,7 +26,7 @@ namespace ReleaseNotesEditor.GuiControls
 					foreach (var repository in value)
 					{
 						_dataSource.Add(repository);
-						flowLayoutPanel1.Controls.Add(new ucRepository { DataSource = repository, Width = flowLayoutPanel1.ClientSize.Width, ShowBranchesWindow = new ShowSelectBranchesCommand(repository.Id)});
+						flowLayoutPanel1.Controls.Add(new ucRepository { DataSource = repository, Width = flowLayoutPanel1.ClientSize.Width, ShowBranchesWindow = new ShowSelectBranchesCommand(repository)});
 					}
 					ApplyRepositoryFilter();
 					flowLayoutPanel1.ResumeLayout(performLayout: true);

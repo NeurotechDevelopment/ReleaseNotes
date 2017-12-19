@@ -8,6 +8,8 @@ namespace CommonDataAndUtilities.DataClassAdapters
 	{
 		public Guid RepositoryId { get; set; }
 
+		public string RepositoryName { get; set; }
+
 		public string SourceBranch { get; set; }
 
 		public List<string> ExcludedBranches { get; set; }

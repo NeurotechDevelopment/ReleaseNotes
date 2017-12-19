@@ -86,12 +86,13 @@ namespace ReleaseNotesEditor
 			this.dgvCommits.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvCommits.GridColor = System.Drawing.SystemColors.Control;
 			this.dgvCommits.Location = new System.Drawing.Point(0, 0);
+			this.dgvCommits.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.dgvCommits.Name = "dgvCommits";
 			this.dgvCommits.ReadOnly = true;
 			this.dgvCommits.RowHeadersVisible = false;
 			this.dgvCommits.RowTemplate.Height = 24;
 			this.dgvCommits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvCommits.Size = new System.Drawing.Size(1154, 337);
+			this.dgvCommits.Size = new System.Drawing.Size(866, 283);
 			this.dgvCommits.TabIndex = 1;
 			this.dgvCommits.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OpenWorkItem_CellContentClick);
 			// 
@@ -173,9 +174,10 @@ namespace ReleaseNotesEditor
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(11, 623);
+			this.button1.Location = new System.Drawing.Point(8, 506);
+			this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.Size = new System.Drawing.Size(56, 19);
 			this.button1.TabIndex = 2;
 			this.button1.Text = "OK";
 			this.button1.UseVisualStyleBackColor = true;
@@ -187,7 +189,8 @@ namespace ReleaseNotesEditor
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer1.Location = new System.Drawing.Point(4, 45);
+			this.splitContainer1.Location = new System.Drawing.Point(3, 37);
+			this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.splitContainer1.Name = "splitContainer1";
 			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -198,8 +201,9 @@ namespace ReleaseNotesEditor
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.dgvCommits);
-			this.splitContainer1.Size = new System.Drawing.Size(1154, 501);
-			this.splitContainer1.SplitterDistance = 160;
+			this.splitContainer1.Size = new System.Drawing.Size(866, 407);
+			this.splitContainer1.SplitterDistance = 121;
+			this.splitContainer1.SplitterWidth = 3;
 			this.splitContainer1.TabIndex = 3;
 			// 
 			// groupBox1
@@ -212,41 +216,47 @@ namespace ReleaseNotesEditor
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
+			this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1154, 160);
+			this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.groupBox1.Size = new System.Drawing.Size(866, 121);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Filter";
 			// 
 			// ucSkipMissingWorkItemAssociationFilter1
 			// 
-			this.ucSkipMissingWorkItemAssociationFilter1.Location = new System.Drawing.Point(263, 67);
+			this.ucSkipMissingWorkItemAssociationFilter1.Location = new System.Drawing.Point(197, 54);
+			this.ucSkipMissingWorkItemAssociationFilter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.ucSkipMissingWorkItemAssociationFilter1.Name = "ucSkipMissingWorkItemAssociationFilter1";
-			this.ucSkipMissingWorkItemAssociationFilter1.Size = new System.Drawing.Size(234, 19);
+			this.ucSkipMissingWorkItemAssociationFilter1.Size = new System.Drawing.Size(176, 15);
 			this.ucSkipMissingWorkItemAssociationFilter1.TabIndex = 6;
 			// 
 			// ucDuplicatePbiCheckBoxFilter1
 			// 
-			this.ucDuplicatePbiCheckBoxFilter1.Location = new System.Drawing.Point(11, 67);
+			this.ucDuplicatePbiCheckBoxFilter1.Location = new System.Drawing.Point(8, 54);
+			this.ucDuplicatePbiCheckBoxFilter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.ucDuplicatePbiCheckBoxFilter1.Name = "ucDuplicatePbiCheckBoxFilter1";
-			this.ucDuplicatePbiCheckBoxFilter1.Size = new System.Drawing.Size(185, 21);
+			this.ucDuplicatePbiCheckBoxFilter1.Size = new System.Drawing.Size(139, 17);
 			this.ucDuplicatePbiCheckBoxFilter1.TabIndex = 5;
 			// 
 			// ucProjectAreaPathTextBoxFilter1
 			// 
 			this.ucProjectAreaPathTextBoxFilter1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ucProjectAreaPathTextBoxFilter1.Location = new System.Drawing.Point(127, 28);
+			this.ucProjectAreaPathTextBoxFilter1.Location = new System.Drawing.Point(95, 23);
+			this.ucProjectAreaPathTextBoxFilter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.ucProjectAreaPathTextBoxFilter1.Name = "ucProjectAreaPathTextBoxFilter1";
-			this.ucProjectAreaPathTextBoxFilter1.Size = new System.Drawing.Size(1013, 24);
+			this.ucProjectAreaPathTextBoxFilter1.Size = new System.Drawing.Size(760, 20);
 			this.ucProjectAreaPathTextBoxFilter1.TabIndex = 5;
 			// 
 			// btnReset
 			// 
 			this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnReset.Location = new System.Drawing.Point(1076, 125);
+			this.btnReset.Location = new System.Drawing.Point(807, 86);
+			this.btnReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnReset.Name = "btnReset";
-			this.btnReset.Size = new System.Drawing.Size(75, 23);
+			this.btnReset.Size = new System.Drawing.Size(56, 26);
 			this.btnReset.TabIndex = 4;
 			this.btnReset.Text = "Reset";
 			this.btnReset.UseVisualStyleBackColor = true;
@@ -255,9 +265,10 @@ namespace ReleaseNotesEditor
 			// btnFilterApply
 			// 
 			this.btnFilterApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFilterApply.Location = new System.Drawing.Point(995, 125);
+			this.btnFilterApply.Location = new System.Drawing.Point(746, 86);
+			this.btnFilterApply.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnFilterApply.Name = "btnFilterApply";
-			this.btnFilterApply.Size = new System.Drawing.Size(75, 23);
+			this.btnFilterApply.Size = new System.Drawing.Size(56, 26);
 			this.btnFilterApply.TabIndex = 3;
 			this.btnFilterApply.Text = "Apply";
 			this.btnFilterApply.UseVisualStyleBackColor = true;
@@ -266,9 +277,10 @@ namespace ReleaseNotesEditor
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(8, 32);
+			this.label1.Location = new System.Drawing.Point(6, 26);
+			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(113, 16);
+			this.label1.Size = new System.Drawing.Size(91, 13);
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Project area path:";
 			// 
@@ -280,9 +292,10 @@ namespace ReleaseNotesEditor
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(12, 9);
+			this.linkLabel1.Location = new System.Drawing.Point(9, 7);
+			this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(105, 16);
+			this.linkLabel1.Size = new System.Drawing.Size(84, 13);
 			this.linkLabel1.TabIndex = 6;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "Load work items";
@@ -292,9 +305,10 @@ namespace ReleaseNotesEditor
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(8, 561);
+			this.label2.Location = new System.Drawing.Point(6, 456);
+			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(98, 16);
+			this.label2.Size = new System.Drawing.Size(79, 13);
 			this.label2.TabIndex = 7;
 			this.label2.Text = "Commits count:";
 			// 
@@ -302,23 +316,25 @@ namespace ReleaseNotesEditor
 			// 
 			this.lbShownCommits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lbShownCommits.AutoSize = true;
-			this.lbShownCommits.Location = new System.Drawing.Point(111, 561);
+			this.lbShownCommits.Location = new System.Drawing.Point(83, 456);
+			this.lbShownCommits.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lbShownCommits.Name = "lbShownCommits";
-			this.lbShownCommits.Size = new System.Drawing.Size(15, 16);
+			this.lbShownCommits.Size = new System.Drawing.Size(13, 13);
 			this.lbShownCommits.TabIndex = 8;
 			this.lbShownCommits.Text = "0";
 			// 
 			// frmCommitsFilter
 			// 
 			this.AcceptButton = this.button1;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1159, 658);
+			this.ClientSize = new System.Drawing.Size(869, 535);
 			this.Controls.Add(this.lbShownCommits);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.button1);
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "frmCommitsFilter";
 			this.Text = "Select commits to show";
 			this.Load += new System.EventHandler(this.frmCommitsFilter_Load);
